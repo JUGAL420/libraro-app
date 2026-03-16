@@ -29,10 +29,16 @@ import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.techito.libraro.R
 import java.io.Serializable
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+import java.util.TimeZone
 import java.util.UUID
 
 /**
@@ -289,5 +295,33 @@ object AppUtils {
             @Suppress("DEPRECATION")
             getSerializableExtra(key) as? T
         }
+    }
+
+    /**
+     * Shows a MaterialDatePicker and returns the selected date in dd-MM-yyyy format.
+     *
+     * @param fragmentManager The supportFragmentManager to show the dialog.
+     * @param title The title for the date picker.
+     * @param onDateSelected Callback function that receives the formatted date string.
+     */
+    fun showDatePicker(
+        fragmentManager: FragmentManager,
+        title: String,
+        onDateSelected: (String) -> Unit
+    ) {
+        val datePicker = MaterialDatePicker.Builder.datePicker()
+            .setTheme(R.style.CustomDatePickerTheme)
+            .setTitleText(title)
+            .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+            .build()
+
+        datePicker.addOnPositiveButtonClickListener { selection ->
+            val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+            calendar.timeInMillis = selection
+            val formattedDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
+            onDateSelected(formattedDate)
+        }
+
+        datePicker.show(fragmentManager, "MATERIAL_DATE_PICKER")
     }
 }

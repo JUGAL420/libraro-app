@@ -49,35 +49,35 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".ui.AdminSignInActivity"
+            android:name=".ui.loginregistration.AdminSignInActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".ui.AdminSignUpActivity"
+            android:name=".ui.loginregistration.AdminSignUpActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".ui.AdminOtpVerificationActivity"
+            android:name=".ui.loginregistration.AdminOtpVerificationActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".ui.AdminForgotPasswordActivity"
+            android:name=".ui.loginregistration.AdminForgotPasswordActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".ui.AdminPlanSelectionActivity"
+            android:name=".ui.loginregistration.AdminPlanSelectionActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
@@ -90,14 +90,21 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".ui.AddBranchFloorActivity"
+            android:name=".ui.loginregistration.BranchConfigurationActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".ui.AddShiftsActivity"
+            android:name=".ui.loginregistration.BranchConfigurationBranchFloorActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".ui.loginregistration.BranchConfigurationShiftsActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"

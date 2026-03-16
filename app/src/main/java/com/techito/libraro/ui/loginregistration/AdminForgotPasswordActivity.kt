@@ -1,4 +1,4 @@
-package com.techito.libraro.ui
+package com.techito.libraro.ui.loginregistration
 
 import android.graphics.Rect
 import android.os.Bundle
@@ -38,7 +38,7 @@ class AdminForgotPasswordActivity : AppCompatActivity() {
         setupObservers()
         // Dynamic support contact number replacement from PreferenceManager
         lifecycleScope.launch {
-            val appSettings = LibraroApp.preferenceManager.appSettings.first()
+            val appSettings = LibraroApp.Companion.preferenceManager.appSettings.first()
             val contactNo = appSettings?.contactNumber?.firstOrNull() ?: "+91 81144 79678"
             val supportMessage =
                 getString(R.string.need_help_msg).replace("{contact_no}", contactNo)

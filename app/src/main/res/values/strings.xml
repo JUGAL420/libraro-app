@@ -121,4 +121,8 @@
     <string name="error_session_expired">Session expired. Please login again.</string>
     <string name="error_server">Server error. Please try again later.</string>
     <string name="btn_skip">Skip</string>
+    <string name="add_plan">Add Plan</string>
+    <string name="plan">Plan</string>
+    <string name="days_for_one_month_only">Days (for one Month Only)</string>
+    <string name="library_operating_hrs_duration_hrs">Library Operating Hrs : {duration} Hrs</string>
 </resources>

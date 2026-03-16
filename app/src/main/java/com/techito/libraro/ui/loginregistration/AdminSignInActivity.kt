@@ -1,4 +1,4 @@
-package com.techito.libraro.ui
+package com.techito.libraro.ui.loginregistration
 
 import android.content.Intent
 import android.graphics.Color
@@ -20,6 +20,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.techito.libraro.R
 import com.techito.libraro.databinding.ActivityAdminSignInBinding
+import com.techito.libraro.ui.MainActivity
 import com.techito.libraro.utils.AppUtils
 import com.techito.libraro.viewmodel.AdminAuthViewModel
 
@@ -42,7 +43,7 @@ class AdminSignInActivity : AppCompatActivity() {
         handleInsets()
         setupSignUpText()
         setupObservers()
-        
+
         binding.tvForgotPassword.setOnClickListener {
             startActivity(Intent(this, AdminForgotPasswordActivity::class.java))
         }
@@ -59,7 +60,8 @@ class AdminSignInActivity : AppCompatActivity() {
 
         viewModel.navigateToOtp.observe(this) { libraryId ->
             if (!libraryId.isNullOrBlank()) {
-                startActivity(Intent(this, AdminOtpVerificationActivity::class.java)
+                startActivity(
+                    Intent(this, AdminOtpVerificationActivity::class.java)
                     .putExtra("library_id", libraryId)
                     .putExtra("email", viewModel.signInEmail.value))
                 viewModel.onNavigationHandled()
@@ -69,6 +71,12 @@ class AdminSignInActivity : AppCompatActivity() {
         viewModel.navigateToPlanSelection.observe(this) { response ->
             if (response != null) {
                 startActivity(Intent(this, AdminPlanSelectionActivity::class.java))
+                viewModel.onNavigationHandled()
+            }
+        }
+        viewModel.navigateToAddBranchAndFloor.observe(this) { response ->
+            if (response) {
+                startActivity(Intent(this, BranchConfigurationActivity::class.java))
                 viewModel.onNavigationHandled()
             }
         }

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="shift"
-            type="com.techito.libraro.model.Shift" />
-
+            type="com.techito.libraro.model.BranchConfigurationShift" />
         <variable
             name="position"
             type="Integer" />
@@ -49,28 +48,44 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilShiftName"
-            style="@style/CustomTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
             android:hint="@string/shift_name"
+            app:boxStrokeColor="@color/box_stroke_color"
+            app:boxStrokeWidth="1dp"
+            app:boxStrokeWidthFocused="1dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusBottomEnd="8dp"
+            android:focusable="false"
+            android:clickable="true"
+            app:endIconDrawable="@drawable/ic_down_arrow_14"
+            app:endIconTint="@color/app_color_1"
+            app:hintTextAppearance="@style/HintTextAppearance"
+            app:hintTextColor="@color/edit_text_hint_color_545454"
             app:layout_constraintEnd_toStartOf="@+id/tilCustomName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/llShiftHeader">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
+                android:id="@+id/etShiftName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_medium"
                 android:paddingVertical="13dp"
-                android:imeOptions="actionNext"
-                android:inputType="textCapSentences"
+                android:focusable="false"
+                android:clickable="true"
+                android:inputType="none"
                 android:maxLength="30"
-                android:text="@={shift.shiftName}"
+                android:text="@{shift.type}"
                 android:textColor="@color/edit_text_color_323232"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:ignore="LabelFor" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -86,6 +101,7 @@
             app:layout_constraintTop_toTopOf="@+id/tilShiftName">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCustomName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_medium"
@@ -93,7 +109,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="textCapSentences"
                 android:maxLength="30"
-                android:text="@={shift.customName}"
+                android:text="@{shift.customName}"
                 android:textColor="@color/edit_text_color_323232"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -112,14 +128,16 @@
             app:layout_constraintTop_toBottomOf="@+id/tilShiftName">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etStartTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
+                android:clickable="true"
                 android:fontFamily="@font/outfit_medium"
                 android:paddingVertical="13dp"
                 android:imeOptions="actionNext"
                 android:inputType="text"
-                android:text="@={shift.startTime}"
+                android:text="@{shift.startTime}"
                 android:textColor="@color/edit_text_color_323232"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -137,13 +155,15 @@
             app:layout_constraintTop_toTopOf="@+id/tilStartTime">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEndTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="false"
+                android:clickable="true"
                 android:fontFamily="@font/outfit_medium"
                 android:paddingVertical="13dp"
                 android:inputType="text"
-                android:text="@={shift.endTime}"
+                android:text="@{shift.endTime}"
                 android:textColor="@color/edit_text_color_323232"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -156,20 +176,23 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
+            android:focusable="false"
             android:hint="@string/duration_in_hrs"
             app:layout_constraintEnd_toStartOf="@+id/tilPrice"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tilStartTime">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDuration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_medium"
                 android:paddingVertical="13dp"
-                android:imeOptions="actionNext"
+                android:imeOptions="actionNone"
                 android:inputType="number"
+                android:focusable="false"
                 android:maxLength="10"
-                android:text="@={shift.duration}"
+                android:text='@{shift.durationHours != null ? String.valueOf(shift.durationHours) : ""}'
                 android:textColor="@color/edit_text_color_323232"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -187,13 +210,14 @@
             app:layout_constraintTop_toTopOf="@+id/tilDuration">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_medium"
                 android:paddingVertical="13dp"
                 android:inputType="number"
-                android:imeOptions="actionNext"
-                android:text="@={shift.price}"
+                android:imeOptions="actionDone"
+                android:text='@{shift.price != null ? String.valueOf(shift.price) : ""}'
                 android:textColor="@color/edit_text_color_323232"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>

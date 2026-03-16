@@ -1,13 +1,7 @@
 package com.techito.libraro.repository
 
 import com.techito.libraro.data.remote.ApiService
-import com.techito.libraro.model.AppSettingResponse
-import com.techito.libraro.model.BasicResponse
-import com.techito.libraro.model.LoginResponse
-import com.techito.libraro.model.OtpVerificationResponse
-import com.techito.libraro.model.PaymentCreateOrderResponse
-import com.techito.libraro.model.RegisterResponse
-import com.techito.libraro.model.SubscriptionPlanResponse
+import com.techito.libraro.model.*
 import com.techito.libraro.utils.NetworkResult
 import retrofit2.Response
 
@@ -65,6 +59,12 @@ class MainRepository(private val apiService: ApiService): BaseRepository() {
     suspend fun getSubscriptionPlans(): NetworkResult<SubscriptionPlanResponse> {
         return safeApiCall {
             apiService.getSubscriptionPlans()
+        }
+    }
+
+    suspend fun getMasterStaticDataList(): NetworkResult<StaticDataListResponse> {
+        return safeApiCall {
+            apiService.getMasterStaticDataList()
         }
     }
 

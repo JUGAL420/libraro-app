@@ -10,6 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import com.techito.libraro.R
 import com.techito.libraro.databinding.ActivityLoginOptionBinding
+import com.techito.libraro.ui.loginregistration.AdminSignInActivity
 import com.techito.libraro.utils.AppUtils
 
 class LoginOptionActivity : AppCompatActivity() {

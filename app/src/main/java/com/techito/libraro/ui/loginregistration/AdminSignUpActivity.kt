@@ -1,4 +1,4 @@
-package com.techito.libraro.ui
+package com.techito.libraro.ui.loginregistration
 
 import android.content.Intent
 import android.graphics.Color
@@ -20,6 +20,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.techito.libraro.R
 import com.techito.libraro.databinding.ActivityAdminSignUpBinding
+import com.techito.libraro.ui.loginregistration.AdminOtpVerificationActivity
 import com.techito.libraro.utils.AppUtils
 import com.techito.libraro.viewmodel.AdminAuthViewModel
 

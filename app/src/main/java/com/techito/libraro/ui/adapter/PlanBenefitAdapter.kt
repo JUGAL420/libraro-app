@@ -7,8 +7,8 @@ import com.techito.libraro.R
 import com.techito.libraro.databinding.ItemPlanBenefitBinding
 import com.techito.libraro.model.PlanFeature
 
-class BenefitAdapter(private val benefits: List<PlanFeature>) :
-    RecyclerView.Adapter<BenefitAdapter.BenefitViewHolder>() {
+class PlanBenefitAdapter(private val benefits: List<PlanFeature>) :
+    RecyclerView.Adapter<PlanBenefitAdapter.BenefitViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BenefitViewHolder {
         val binding = ItemPlanBenefitBinding.inflate(

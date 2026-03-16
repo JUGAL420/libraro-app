@@ -1,10 +1,10 @@
-package com.techito.libraro.ui
+package com.techito.libraro.ui.loginregistration
 
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -83,7 +83,7 @@ class AdminPlanSelectionActivity : AppCompatActivity(), PaymentResultWithDataLis
 
         viewModel.navigateToAddBranch.observe(this) { shouldNavigate ->
             if (shouldNavigate) {
-                startActivity(Intent(this, AddBranchFloorActivity::class.java))
+                startActivity(Intent(this, BranchConfigurationActivity::class.java))
                 viewModel.onNavigationHandled()
                 finish()
             }
@@ -150,7 +150,7 @@ class AdminPlanSelectionActivity : AppCompatActivity(), PaymentResultWithDataLis
 
                 val notesObj = JSONObject()
                 notesObj.put("Transaction_no", orderData.transactionId)
-                val libraryId = LibraroApp.preferenceManager.libraryId.first()
+                val libraryId = LibraroApp.Companion.preferenceManager.libraryId.first()
                 notesObj.put("Library_id", libraryId ?: "")
                 options.put("notes", notesObj)
 
@@ -224,7 +224,10 @@ class AdminPlanSelectionActivity : AppCompatActivity(), PaymentResultWithDataLis
         binding.llIndicators.removeAllViews()
         if (count <= 1) return
 
-        val layoutParams = LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
+        val layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         layoutParams.setMargins(8, 0, 8, 0)
 
         for (i in 0 until count) {

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/branch_configuration_nav"
+    app:startDestination="@id/configurationBranchFloorFragment">
+
+    <fragment
+        android:id="@+id/configurationBranchFloorFragment"
+        android:name="com.techito.libraro.ui.loginregistration.ConfigurationBranchFloorFragment"
+        android:label="ConfigurationBranchFloorFragment"
+        tools:layout="@layout/fragment_configuration_branch_floor">
+        <action
+            android:id="@+id/action_configurationBranchFloorFragment_to_configurationBranchShiftFragment"
+            app:destination="@id/configurationBranchShiftFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/configurationBranchShiftFragment"
+        android:name="com.techito.libraro.ui.loginregistration.ConfigurationBranchShiftFragment"
+        android:label="ConfigurationBranchShiftFragment"
+        tools:layout="@layout/fragment_configuration_branch_shift" />
+</navigation>

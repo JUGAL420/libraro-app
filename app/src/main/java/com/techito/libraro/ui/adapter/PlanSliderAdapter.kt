@@ -46,7 +46,7 @@ class PlanSliderAdapter : RecyclerView.Adapter<PlanSliderAdapter.PlanViewHolder>
             binding.rvBenefits.layoutManager = LinearLayoutManager(binding.root.context)
             // Use features from PlanData
             val benefits = plan.features?.filterNotNull() ?: emptyList()
-            binding.rvBenefits.adapter = BenefitAdapter(benefits)
+            binding.rvBenefits.adapter = PlanBenefitAdapter(benefits)
             binding.executePendingBindings()
         }
     }

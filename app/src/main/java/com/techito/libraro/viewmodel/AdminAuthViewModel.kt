@@ -52,6 +52,7 @@ class AdminAuthViewModel : ViewModel() {
     val navigateToHome = MutableLiveData<Boolean>()
     val navigateToOtp = MutableLiveData<String?>() // Passes the libraryId
     val navigateToPlanSelection = MutableLiveData<OtpVerificationResponse?>()
+    val navigateToAddBranchAndFloor = MutableLiveData<Boolean>()
 
     private var timer: CountDownTimer? = null
 
@@ -170,7 +171,7 @@ class AdminAuthViewModel : ViewModel() {
             rememberMe.value ?: false
         )
 
-        if (response.isEmailVerified == 1 && (response.isLastStep ?: 0) > 3) {
+        if (response.isEmailVerified == 1 && (response.isLastStep ?: 0) > 2) {
             preferenceManager.setLoggedIn(true)
             navigateToHome.value = true
         } else if (response.isEmailVerified != 1) {
@@ -187,6 +188,8 @@ class AdminAuthViewModel : ViewModel() {
                 response.token,
                 response.userType
             )
+        }else if(response.isLastStep == 1 || response.isLastStep == 2){
+            navigateToAddBranchAndFloor.value = true
         }
     }
 
@@ -439,6 +442,7 @@ class AdminAuthViewModel : ViewModel() {
         navigateToHome.value = false
         navigateToOtp.value = null
         navigateToPlanSelection.value = null
+        navigateToAddBranchAndFloor.value = false
         navigateBack.value = null
     }
 

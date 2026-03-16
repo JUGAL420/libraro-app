@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
-            type="com.techito.libraro.viewmodel.LibrarySetupViewModel" />
+            type="com.techito.libraro.viewmodel.BranchConfigurationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -108,11 +107,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
+                    android:focusable="false"
                     android:layout_marginTop="12dp"
                     android:hint="@string/founder_s_day"
                     app:layout_constraintTop_toBottomOf="@+id/tilBranchName">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etFoundersDay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:focusable="false"
@@ -194,6 +195,7 @@
                         android:text="@={viewModel.upiId}"
                         android:textColor="@color/edit_text_color_323232"
                         android:textSize="14sp" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -238,26 +240,38 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilOperatingHrs"
-                    style="@style/CustomTextInputLayout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
                     android:hint="@string/operating_hrs"
+                    app:boxStrokeColor="@color/box_stroke_color"
+                    app:boxStrokeWidth="1dp"
+                    app:boxStrokeWidthFocused="1dp"
+                    app:boxCornerRadiusTopStart="8dp"
+                    app:boxCornerRadiusTopEnd="8dp"
+                    app:boxCornerRadiusBottomStart="8dp"
+                    app:boxCornerRadiusBottomEnd="8dp"
+                    app:endIconDrawable="@drawable/ic_down_arrow_14"
+                    app:endIconTint="@color/app_color_1"
+                    app:hintTextAppearance="@style/HintTextAppearance"
+                    app:hintTextColor="@color/edit_text_hint_color_545454"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tilTotalSeats"
                     app:layout_constraintTop_toTopOf="@+id/tilTotalSeats">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <AutoCompleteTextView
+                        android:id="@+id/actvOperatingHrs"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/outfit_medium"
-                        android:imeOptions="actionNext"
-                        android:inputType="number"
+                        android:inputType="none"
                         android:paddingVertical="13dp"
                         android:text="@={viewModel.operatingHrs}"
                         android:textColor="@color/edit_text_color_323232"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        tools:ignore="LabelFor" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -279,7 +293,7 @@
                         android:fontFamily="@font/outfit_medium"
                         android:imeOptions="actionNext"
                         android:inputType="number"
-                        android:maxLength="6"
+                        android:maxLength="8"
                         android:paddingVertical="13dp"
                         android:text="@={viewModel.lockerAmt}"
                         android:textColor="@color/edit_text_color_323232"
@@ -311,18 +325,31 @@
                         android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <TextView
+                    android:id="@+id/tvAddPlan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/outfit_semibold"
+                    android:text="@string/add_plan"
+                    android:textColor="@color/app_color_1"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tilLocker" />
+
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilToken"
+                    android:id="@+id/tilPlan"
                     style="@style/CustomTextInputLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="8dp"
-                    android:hint="@string/token_money_optional"
-                    app:layout_constraintEnd_toStartOf="@+id/tilEndDate"
+                    android:hint="@string/plan"
+                    app:layout_constraintEnd_toStartOf="@+id/tilPlanDays"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilLocker">
+                    app:layout_constraintTop_toBottomOf="@+id/tvAddPlan">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -330,34 +357,47 @@
                         android:fontFamily="@font/outfit_medium"
                         android:imeOptions="actionNext"
                         android:inputType="number"
+                        android:clickable="false"
+                        android:focusable="false"
                         android:paddingVertical="13dp"
-                        android:text="@={viewModel.tokenMoney}"
+                        android:text="1 Month"
                         android:textColor="@color/edit_text_color_323232"
                         android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilEndDate"
-                    style="@style/CustomTextInputLayout"
+                    android:id="@+id/tilPlanDays"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
-                    android:hint="@string/want_fix_end_date"
+                    android:hint="@string/days_for_one_month_only"
+                    app:boxStrokeColor="@color/box_stroke_color"
+                    app:boxStrokeWidth="1dp"
+                    app:boxStrokeWidthFocused="1dp"
+                    app:boxCornerRadiusTopStart="8dp"
+                    app:boxCornerRadiusTopEnd="8dp"
+                    app:boxCornerRadiusBottomStart="8dp"
+                    app:boxCornerRadiusBottomEnd="8dp"
+                    app:endIconDrawable="@drawable/ic_down_arrow_14"
+                    app:endIconTint="@color/app_color_1"
+                    app:hintTextAppearance="@style/HintTextAppearance"
+                    app:hintTextColor="@color/edit_text_hint_color_545454"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tilToken"
-                    app:layout_constraintTop_toTopOf="@+id/tilToken">
+                    app:layout_constraintStart_toEndOf="@+id/tilPlan"
+                    app:layout_constraintTop_toTopOf="@+id/tilPlan">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <AutoCompleteTextView
+                        android:id="@+id/actvPlanDays"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:focusable="false"
                         android:fontFamily="@font/outfit_medium"
-                        android:imeOptions="actionDone"
-                        android:inputType="text"
+                        android:inputType="none"
                         android:paddingVertical="13dp"
                         android:textColor="@color/edit_text_color_323232"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        tools:ignore="LabelFor" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -371,7 +411,7 @@
                     android:textColor="@color/app_color_1"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilToken" />
+                    app:layout_constraintTop_toBottomOf="@+id/tilPlan" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvFloors"
@@ -436,7 +476,6 @@
                     android:fontFamily="@font/outfit_semibold"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:onClick="@{() -> viewModel.onSaveAndNextClicked()}"
                     android:paddingHorizontal="14dp"
                     android:paddingVertical="12dp"
                     android:text="@string/save_next"
@@ -452,6 +491,10 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <include
+            android:id="@+id/layoutProgress"
+            layout="@layout/layout_progress" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

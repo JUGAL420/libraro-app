@@ -3,18 +3,21 @@ package com.techito.libraro.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.techito.libraro.databinding.ItemShiftBinding
-import com.techito.libraro.model.Shift
+import com.techito.libraro.model.BranchConfigurationShift
 
-class ShiftAdapter(
-    private var shifts: List<Shift>,
-    private val onAddClick: () -> Unit,
+class BranchConfigurationShiftAdapter(
+    private var shifts: List<BranchConfigurationShift>,
+    private val onShiftName: (Int, AutoCompleteTextView) -> Unit,
     private val onDeleteClick: (Int) -> Unit,
     private val onTimeClick: (Int, Boolean) -> Unit
-) : RecyclerView.Adapter<ShiftAdapter.ShiftViewHolder>() {
+) : RecyclerView.Adapter<BranchConfigurationShiftAdapter.ShiftViewHolder>() {
 
-    fun updateData(newShifts: List<Shift>) {
+    fun updateData(newShifts: List<BranchConfigurationShift>) {
         shifts = newShifts
         notifyDataSetChanged()
     }
@@ -33,9 +36,15 @@ class ShiftAdapter(
     inner class ShiftViewHolder(private val binding: ItemShiftBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(shift: Shift, position: Int, totalSize: Int) {
+        fun bind(shift: BranchConfigurationShift, position: Int, totalSize: Int) {
             binding.shift = shift
             binding.position = position
+            
+            // Sync UI changes back to the shared ViewModel list
+            binding.etShiftName.doAfterTextChanged { shift.type = it.toString() }
+            binding.etCustomName.doAfterTextChanged { shift.customName = it.toString() }
+            binding.etDuration.doAfterTextChanged { shift.durationHours = it.toString() }
+            binding.etPrice.doAfterTextChanged { shift.price = it.toString().toIntOrNull() }
 
             if (totalSize > 1) {
                 binding.ivDeleteShift.visibility = View.VISIBLE
@@ -44,8 +53,11 @@ class ShiftAdapter(
                 binding.ivDeleteShift.visibility = View.GONE
             }
 
-            binding.tilStartTime.setOnClickListener { onTimeClick(position, true) }
-            binding.tilEndTime.setOnClickListener { onTimeClick(position, false) }
+            binding.etShiftName.setOnClickListener { onShiftName(position, binding.etShiftName) }
+            binding.tilShiftName.setOnClickListener { binding.etShiftName.performClick() }
+
+            binding.etStartTime.setOnClickListener { onTimeClick(position, true) }
+            binding.etEndTime.setOnClickListener { onTimeClick(position, false) }
 
             binding.executePendingBindings()
         }

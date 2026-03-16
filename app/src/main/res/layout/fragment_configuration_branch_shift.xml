@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
-            type="com.techito.libraro.viewmodel.LibrarySetupViewModel" />
+            type="com.techito.libraro.viewmodel.BranchConfigurationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,6 +60,32 @@
                         android:textSize="18sp" />
                 </LinearLayout>
 
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcvShiftDuration"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/color_E5E9FF"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="8dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="6dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/llHeader">
+
+                    <TextView
+                        android:id="@+id/tvShiftDuration"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="14dp"
+                        android:paddingVertical="12dp"
+                        android:text="@string/library_operating_hrs_duration_hrs"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/outfit_semibold"/>
+
+                </com.google.android.material.card.MaterialCardView>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvShifts"
                     android:layout_width="match_parent"
@@ -69,7 +94,7 @@
                     android:layout_marginTop="16dp"
                     android:nestedScrollingEnabled="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintTop_toBottomOf="@+id/llHeader"
+                    app:layout_constraintTop_toBottomOf="@+id/mcvShiftDuration"
                     tools:itemCount="1"
                     tools:listitem="@layout/item_shift" />
 
@@ -123,9 +148,9 @@
                     android:fontFamily="@font/outfit_semibold"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:onClick="@{() -> viewModel.onFinishSetupClicked()}"
                     android:paddingHorizontal="14dp"
                     android:paddingVertical="12dp"
+                    android:onClick="@{() -> viewModel.onFinishSetupClicked()}"
                     android:text="@string/finish_setup"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
@@ -138,6 +163,10 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <include
+            android:id="@+id/layoutProgress"
+            layout="@layout/layout_progress" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

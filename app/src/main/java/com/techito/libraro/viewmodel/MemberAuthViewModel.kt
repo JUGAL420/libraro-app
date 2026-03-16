@@ -3,7 +3,7 @@ package com.techito.libraro.viewmodel
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.techito.libraro.ui.AdminOtpVerificationActivity
+import com.techito.libraro.ui.loginregistration.AdminOtpVerificationActivity
 
 class MemberAuthViewModel : ViewModel() {
 

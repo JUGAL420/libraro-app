@@ -1,13 +1,8 @@
 package com.techito.libraro.data.remote
 
-import com.techito.libraro.model.AppSettingResponse
-import com.techito.libraro.model.BasicResponse
-import com.techito.libraro.model.LoginResponse
-import com.techito.libraro.model.OtpVerificationResponse
-import com.techito.libraro.model.PaymentCreateOrderResponse
-import com.techito.libraro.model.RegisterResponse
-import com.techito.libraro.model.SubscriptionPlanResponse
+import com.techito.libraro.model.*
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -63,7 +58,6 @@ interface ApiService {
         @Field("subscription_id") planModeId: String
     ): Response<PaymentCreateOrderResponse>
 
-
     @FormUrlEncoded
     @POST(ApiConstants.SUB_URL + ApiConstants.LIBRARY_PAYMENT_VERIFY)
     suspend fun verifyPayment(
@@ -73,6 +67,14 @@ interface ApiService {
         @Field("razorpay_signature") razorpaySignature: String,
         @Field("payment_status") paymentStatus: String,
         @Field("payment_response") paymentResponse: String
+    ): Response<BasicResponse>
+
+    @GET(ApiConstants.SUB_URL + ApiConstants.MASTER_STATIC_DATA)
+    suspend fun getMasterStaticDataList(): Response<StaticDataListResponse>
+
+    @POST(ApiConstants.SUB_URL + ApiConstants.LIBRARY_SAVE_BRANCH_CONFIGURATION) // Assuming endpoint
+    suspend fun saveBranchConfiguration(
+        @Body request: BranchConfigurationRequest
     ): Response<BasicResponse>
 
 }

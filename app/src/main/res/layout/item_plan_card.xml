@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="plan"
-            type="com.techito.libraro.model.Plan" />
+            name="planData"
+            type="com.techito.libraro.model.PlanData" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -22,45 +22,67 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="12dp"
+            android:paddingTop="8dp"
             android:paddingBottom="18dp"
             android:paddingHorizontal="18dp">
 
-            <TextView
-                android:id="@+id/tvPrice"
+            <LinearLayout
+                android:id="@+id/llPrice"
                 android:layout_width="0dp"
+                android:gravity="center_horizontal|bottom"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/outfit_semibold"
-                android:gravity="center"
-                android:text="@{plan.price}"
-                android:includeFontPadding="false"
-                android:textColor="@color/app_color_1"
-                android:textSize="48sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="49" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/outfit_semibold"
+                    android:gravity="center"
+                    android:text='@{"₹" + planData.price}'
+                    android:includeFontPadding="false"
+                    android:textColor="@color/app_color_1"
+                    android:textSize="48sp"
+                    tools:text="₹49" />
+
+                <TextView
+                    android:id="@+id/tvOriginalPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/outfit_semibold"
+                    android:gravity="center"
+                    android:paddingHorizontal="3dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="-5dp"
+                    android:text='@{"₹" + planData.originalPrice}'
+                    android:includeFontPadding="false"
+                    android:textColor="@color/color_737373"
+                    android:textSize="26sp"
+                    tools:text="₹49" />
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/tvPlanName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/outfit_semibold"
-                android:text="@{plan.name}"
-                android:layout_marginTop="-4dp"
+                android:text="@{planData.name}"
                 android:gravity="center"
+                android:layout_marginTop="-8dp"
                 android:textColor="@color/app_color_1"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPrice"
+                app:layout_constraintTop_toBottomOf="@+id/llPrice"
                 tools:text="Basic Plan" />
 
             <TextView
                 android:id="@+id/tvBenefitsHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
                 android:gravity="center"
                 android:fontFamily="@font/outfit_medium"
                 android:text="@string/plan_benefits"

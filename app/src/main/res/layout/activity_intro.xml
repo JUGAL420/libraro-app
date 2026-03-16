@@ -45,5 +45,22 @@
             app:cornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent" />
 
+        <TextView
+            android:id="@+id/btnSkip"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/btn_bg_circular"
+            android:fontFamily="@font/outfit_semibold"
+            android:paddingVertical="7dp"
+            android:paddingHorizontal="14dp"
+            android:text="@string/btn_skip"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:elevation="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

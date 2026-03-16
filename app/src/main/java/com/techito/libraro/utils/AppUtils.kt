@@ -26,6 +26,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -48,13 +49,15 @@ object AppUtils {
      * @param colorResId The color resource ID for the status bar background.
      * @param isLight True to set dark icons (for light backgrounds), false for white icons (for dark backgrounds).
      */
-    fun changeStatusBarColor(activity: Activity, colorResId: Int, isLight: Boolean) {
+    fun changeStatusBarColor(activity: Activity, @ColorRes colorResId: Int, isLight: Boolean) {
         val window = activity.window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = ContextCompat.getColor(activity, colorResId)
 
-        // WindowInsetsControllerCompat handles API version checks internally (M and above)
-        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = isLight
+        val color = ContextCompat.getColor(activity, colorResId)
+        window.statusBarColor = color
+
+        val controller = WindowInsetsControllerCompat(window, window.decorView)
+        controller.isAppearanceLightStatusBars = isLight
     }
 
     /**

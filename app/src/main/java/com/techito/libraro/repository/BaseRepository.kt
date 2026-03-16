@@ -1,9 +1,9 @@
 package com.techito.libraro.repository
 
 import android.util.Log
-import com.google.gson.Gson
+import com.techito.libraro.LibraroApp
+import com.techito.libraro.R
 import com.techito.libraro.utils.NetworkResult
-import org.json.JSONObject
 import retrofit2.Response
 import java.io.IOException
 import java.net.SocketTimeoutException
@@ -13,6 +13,13 @@ import java.net.SocketTimeoutException
  * It handles standard HTTP errors, network timeouts, and parses JSON error bodies.
  */
 abstract class BaseRepository {
+
+    /**
+     * Helper function to get string resources from the Application context.
+     */
+    private fun getString(resId: Int): String {
+        return LibraroApp.instance.getString(resId)
+    }
 
     /**
      * Executes an API call safely, catching exceptions and wrapping the result.
@@ -27,7 +34,7 @@ abstract class BaseRepository {
                 if (body != null) {
                     NetworkResult.Success(body)
                 } else {
-                    NetworkResult.Error("Something went wrong. Please try again.")
+                    NetworkResult.Error(getString(R.string.error_something_went_wrong))
                 }
 
             } else {
@@ -35,12 +42,12 @@ abstract class BaseRepository {
             }
 
         } catch (e: SocketTimeoutException) {
-            NetworkResult.Error("Request timeout. Please try again.")
+            NetworkResult.Error(getString(R.string.error_request_timeout))
         } catch (e: IOException) {
-            NetworkResult.Error("No internet connection.")
+            NetworkResult.Error(getString(R.string.error_no_internet))
         } catch (e: Exception) {
             Log.e("BaseRepository", "Unexpected error", e)
-            NetworkResult.Error("Something went wrong. Please try again later.")
+            NetworkResult.Error(getString(R.string.error_something_went_wrong_later))
         }
     }
 
@@ -55,19 +62,19 @@ abstract class BaseRepository {
         return when (response.code()) {
 
             401, 403 -> {
-                NetworkResult.Unauthorized("Session expired. Please login again.")
+                NetworkResult.Unauthorized(getString(R.string.error_session_expired))
             }
 
             in 400..499 -> {
-                NetworkResult.Error("Something went wrong. Please try again.")
+                NetworkResult.Error(getString(R.string.error_something_went_wrong))
             }
 
             in 500..599 -> {
-                NetworkResult.Error("Server error. Please try again later.")
+                NetworkResult.Error(getString(R.string.error_server))
             }
 
             else -> {
-                NetworkResult.Error("Something went wrong. Please try again.")
+                NetworkResult.Error(getString(R.string.error_something_went_wrong))
             }
         }
     }

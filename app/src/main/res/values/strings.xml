@@ -33,12 +33,12 @@
 
     <string name="verify_your_account">Verify Your Account</string>
     <string name="enter_verification_code">Enter Verification Code</string>
-    <string name="otp_sent_msg">An OTP has been sent to your registered email address. Please enter it here to proceed.</string>
+    <string name="otp_sent_msg">An OTP has been sent to your email: {email}. Please enter it here to proceed.</string>
     <string name="verification_code">Verification Code</string>
     <string name="verify">Verify</string>
     <string name="to_access_your_account">To access your Account ? </string>
 
-    <string name="need_help_msg">Need help? Our support team is here for you.\nCall us at +91 81144 79678</string>
+    <string name="need_help_msg">Need help? Our support team is here for you.\nCall us at {contact_no}</string>
 
     <string name="forgot_password_title">Forgot Password</string>
     <string name="forgot_password_desc">Enter your registered email address to receive password reset instructions.</string>
@@ -102,4 +102,23 @@
     <string name="view_all">View All</string>
     <string name="expired_members">Expired Members</string>
     <string name="renew">RENEW</string>
+
+    <!-- Validation Errors -->
+    <string name="err_enter_library_name">Please enter library name</string>
+    <string name="err_enter_email">Please enter email</string>
+    <string name="err_invalid_email">Please enter a valid email address</string>
+    <string name="err_enter_mobile">Please enter mobile number</string>
+    <string name="err_invalid_mobile">Please enter a valid 10-digit mobile number</string>
+    <string name="err_enter_password">Please enter password</string>
+    <string name="err_strong_password">Password must be at least one uppercase letter, one lowercase letter, one digit, and one special character.</string>
+    <string name="err_8_characters_password">Password must be at least 8 characters long.</string>
+
+    <!-- Network & Repository Errors -->
+    <string name="error_something_went_wrong">Something went wrong. Please try again.</string>
+    <string name="error_request_timeout">Request timeout. Please try again.</string>
+    <string name="error_no_internet">No internet connection.</string>
+    <string name="error_something_went_wrong_later">Something went wrong. Please try again later.</string>
+    <string name="error_session_expired">Session expired. Please login again.</string>
+    <string name="error_server">Server error. Please try again later.</string>
+    <string name="btn_skip">Skip</string>
 </resources>

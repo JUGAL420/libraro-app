@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.techito.libraro.R
@@ -38,21 +39,45 @@ class AdminSignUpActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         handleInsets()
         setupSignInText()
+        setupObservers()
 
         binding.btnProceed.setOnClickListener {
-            startActivity(Intent(this, AdminOtpVerificationActivity::class.java))
+            viewModel.onSignUpClicked()
+        }
+    }
+
+    private fun setupObservers() {
+        viewModel.navigateToOtp.observe(this) { libraryId ->
+            if (!libraryId.isNullOrBlank()) {
+                startActivity(
+                    Intent(this, AdminOtpVerificationActivity::class.java)
+                        .putExtra("email", viewModel.signUpEmail.value)
+                        .putExtra("library_id", libraryId)
+                )
+                viewModel.onNavigationHandled()
+            }
+        }
+
+        viewModel.errorMessage.observe(this) { message ->
+            message?.let {
+                AppUtils.showToast(this, it)
+                viewModel.onErrorHandled()
+            }
+        }
+
+        viewModel.isLoading.observe(this) { isLoading ->
+            binding.layoutProgress.clProgress.isVisible = isLoading
         }
     }
 
     private fun setupSignInText() {
-        val fullText = getString(R.string.already_register) +" "+ getString(R.string.sign_in)
+        val fullText = getString(R.string.already_register) + " " + getString(R.string.sign_in)
         val spannableString = SpannableString(fullText)
         val signInPart = getString(R.string.sign_in)
         val startIndex = fullText.indexOf(signInPart)
 
         val clickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
-                startActivity(Intent(this@AdminSignUpActivity, AdminSignInActivity::class.java))
                 finish()
             }
 
@@ -64,12 +89,14 @@ class AdminSignUpActivity : AppCompatActivity() {
             }
         }
 
-        spannableString.setSpan(
-            clickableSpan,
-            startIndex,
-            startIndex + signInPart.length,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+        if (startIndex != -1) {
+            spannableString.setSpan(
+                clickableSpan,
+                startIndex,
+                startIndex + signInPart.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
 
         binding.tvSignIn.text = spannableString
         binding.tvSignIn.movementMethod = LinkMovementMethod.getInstance()

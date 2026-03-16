@@ -6,6 +6,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.security.crypto.MasterKey
+import com.google.gson.Gson
+import com.techito.libraro.model.AppSettingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -44,6 +46,14 @@ class PreferenceManager private constructor(context: Context) {
         val FCM_TOKEN = stringPreferencesKey("fcm_token")
         val DEVICE_ID = stringPreferencesKey("device_id")
         val HAS_ASKED_NOTIF_PERMISSION = booleanPreferencesKey("has_asked_notification_permission")
+        val APP_SETTINGS = stringPreferencesKey("app_settings")
+        val LIBRARY_ID = stringPreferencesKey("library_id")
+        val USER_TYPE = stringPreferencesKey("user_type")
+        
+        // Remember Login Details
+        val REMEMBER_EMAIL = stringPreferencesKey("remember_email")
+        val REMEMBER_PASSWORD = stringPreferencesKey("remember_password")
+        val IS_REMEMBER_ME = booleanPreferencesKey("is_remember_me")
     }
 
     companion object {
@@ -115,6 +125,18 @@ class PreferenceManager private constructor(context: Context) {
     }
 
     /**
+     * Library ID (Encrypted)
+     */
+    val libraryId: Flow<String?> = dataStore.data
+        .map { preferences -> decrypt(preferences[Keys.LIBRARY_ID]) }
+
+    suspend fun saveLibraryId(id: String?) {
+        dataStore.edit { preferences ->
+            preferences[Keys.LIBRARY_ID] = encrypt(id) ?: ""
+        }
+    }
+
+    /**
      * Auth Token (Encrypted)
      */
     val authToken: Flow<String?> = dataStore.data
@@ -164,6 +186,38 @@ class PreferenceManager private constructor(context: Context) {
     }
 
     /**
+     * User Type
+     */
+    val userType: Flow<String?> = dataStore.data
+        .map { preferences -> preferences[Keys.USER_TYPE] }
+
+    suspend fun saveUserType(type: String?) {
+        dataStore.edit { preferences ->
+            preferences[Keys.USER_TYPE] = type ?: ""
+        }
+    }
+
+    /**
+     * Remember Me Details (Encrypted)
+     */
+    val rememberEmail: Flow<String?> = dataStore.data
+        .map { preferences -> decrypt(preferences[Keys.REMEMBER_EMAIL]) }
+
+    val rememberPassword: Flow<String?> = dataStore.data
+        .map { preferences -> decrypt(preferences[Keys.REMEMBER_PASSWORD]) }
+
+    val isRememberMeChecked: Flow<Boolean> = dataStore.data
+        .map { preferences -> preferences[Keys.IS_REMEMBER_ME] ?: false }
+
+    suspend fun saveRememberMeDetails(email: String?, password: String?, isChecked: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[Keys.REMEMBER_EMAIL] = if (isChecked) encrypt(email) ?: "" else ""
+            preferences[Keys.REMEMBER_PASSWORD] = if (isChecked) encrypt(password) ?: "" else ""
+            preferences[Keys.IS_REMEMBER_ME] = isChecked
+        }
+    }
+
+    /**
      * App States
      */
     val isFirstTimeLaunch: Flow<Boolean> = dataStore.data
@@ -203,6 +257,21 @@ class PreferenceManager private constructor(context: Context) {
     }
 
     /**
+     * App Settings
+     */
+    val appSettings: Flow<AppSettingData?> = dataStore.data
+        .map { preferences ->
+            val json = preferences[Keys.APP_SETTINGS]
+            if (json.isNullOrEmpty()) null else Gson().fromJson(json, AppSettingData::class.java)
+        }
+
+    suspend fun saveAppSettings(settings: AppSettingData?) {
+        dataStore.edit { preferences ->
+            preferences[Keys.APP_SETTINGS] = Gson().toJson(settings)
+        }
+    }
+
+    /**
      * Clears all stored preferences (usually on Logout) except for FCM_TOKEN and DEVICE_ID.
      */
     suspend fun clearAll() {
@@ -210,11 +279,21 @@ class PreferenceManager private constructor(context: Context) {
             val fcmToken = preferences[Keys.FCM_TOKEN]
             val deviceId = preferences[Keys.DEVICE_ID]
             
+            // Keep remember me details if that's what user meant by "restore when clear" 
+            // but usually clearAll means logout. 
+            // I will keep remember details for now as per point 3.
+            val remEmail = preferences[Keys.REMEMBER_EMAIL]
+            val remPass = preferences[Keys.REMEMBER_PASSWORD]
+            val remChecked = preferences[Keys.IS_REMEMBER_ME]
+            
             preferences.clear()
             
-            // Restore FCM_TOKEN and DEVICE_ID if they existed
+            // Restore kept values
             fcmToken?.let { preferences[Keys.FCM_TOKEN] = it }
             deviceId?.let { preferences[Keys.DEVICE_ID] = it }
+            remEmail?.let { preferences[Keys.REMEMBER_EMAIL] = it }
+            remPass?.let { preferences[Keys.REMEMBER_PASSWORD] = it }
+            remChecked?.let { preferences[Keys.IS_REMEMBER_ME] = it }
         }
     }
 }

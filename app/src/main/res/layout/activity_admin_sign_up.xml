@@ -104,7 +104,7 @@
                             android:paddingVertical="13dp"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
-                            android:maxLines="1"
+                            android:lines="1"
                             android:text="@={viewModel.libraryName}"
                             android:textColor="@color/edit_text_color_323232"
                             android:textSize="14sp" />
@@ -129,6 +129,7 @@
                             android:fontFamily="@font/outfit_medium"
                             android:paddingVertical="13dp"
                             android:imeOptions="actionNext"
+                            android:lines="1"
                             android:inputType="textEmailAddress"
                             android:text="@={viewModel.signUpEmail}"
                             android:textColor="@color/edit_text_color_323232"
@@ -143,6 +144,8 @@
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="12dp"
                         android:hint="@string/mobile_number"
+                        app:prefixText="+91 "
+                        app:prefixTextColor="@color/edit_text_color_323232"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tilEmail">
@@ -155,6 +158,8 @@
                             android:paddingVertical="13dp"
                             android:imeOptions="actionNext"
                             android:inputType="phone"
+                            android:lines="1"
+                            android:maxLength="10"
                             android:text="@={viewModel.mobileNumber}"
                             android:textColor="@color/edit_text_color_323232"
                             android:textSize="14sp" />
@@ -179,7 +184,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/outfit_medium"
                             android:paddingVertical="13dp"
-                            android:imeOptions="actionNext"
+                            android:imeOptions="actionDone"
                             android:inputType="textPassword"
                             android:text="@={viewModel.signUpPassword}"
                             android:textColor="@color/edit_text_color_323232"
@@ -221,5 +226,9 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
+
+        <include
+            android:id="@+id/layoutProgress"
+            layout="@layout/layout_progress" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

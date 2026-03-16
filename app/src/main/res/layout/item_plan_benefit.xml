@@ -18,9 +18,11 @@
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
+            android:id="@+id/statusImage"
             android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_height="wrap_content"
             android:contentDescription="@string/app_name"
+            android:adjustViewBounds="true"
             android:src="@drawable/ic_check_green" />
 
         <TextView

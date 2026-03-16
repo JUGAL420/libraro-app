@@ -3,6 +3,9 @@ package com.techito.libraro.data.remote
 import android.util.Log
 import com.techito.libraro.BuildConfig
 import com.techito.libraro.LibraroApp
+import com.techito.libraro.data.remote.RetrofitClient.okHttpClient
+import com.techito.libraro.data.remote.RetrofitClient.retrofit
+import com.techito.libraro.utils.AppUtils
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.ConnectionPool
@@ -33,6 +36,43 @@ object RetrofitClient {
         }
     }
 
+    private val okHttpClientUserAuth = OkHttpClient.Builder()
+        .addInterceptor(loggingInterceptor)
+        .addInterceptor { chain ->
+            val original = chain.request()
+            val requestBuilder = original.newBuilder()
+                .addHeader("lc", ApiConstants.LANGUAGE)
+                .addHeader("Accept", "application/json")
+                .addHeader("Content-Type", "application/json")
+                .addHeader("device-type", "android")
+                .addHeader("x-api-key", BuildConfig.API_TOKEN)
+
+            // Security: Automatically add Auth Token if available in DataStore
+            // Interceptors are synchronous, so we use runBlocking to fetch from DataStore
+            val token = runBlocking { LibraroApp.preferenceManager.authToken.first() }
+            val deviceId = runBlocking { LibraroApp.preferenceManager.deviceId.first() }
+            if(!deviceId.isNullOrEmpty()){
+                requestBuilder.addHeader("device_id", deviceId)
+            }
+            if (!token.isNullOrEmpty()) {
+                requestBuilder.addHeader("Authorization", "Bearer $token")
+            }
+            chain.proceed(requestBuilder.build())
+        }
+        .connectTimeout(1, TimeUnit.MINUTES)
+        .readTimeout(1, TimeUnit.MINUTES)
+        .writeTimeout(1, TimeUnit.MINUTES)
+        .retryOnConnectionFailure(true)
+        .connectionPool(ConnectionPool(5, 5, TimeUnit.MINUTES))
+        .protocols(listOf(Protocol.HTTP_2, Protocol.HTTP_1_1))
+        .build()
+
+    private val retrofitUserAuth: Retrofit = Retrofit.Builder()
+        .baseUrl(ApiConstants.BASE_URL)
+        .client(okHttpClientUserAuth)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
         .addInterceptor { chain ->
@@ -42,18 +82,11 @@ object RetrofitClient {
                 .addHeader("Accept", "application/json")
                 .addHeader("Content-Type", "application/json")
                 .addHeader("device-type", "android")
-
-            // Security: Automatically add Auth Token if available in DataStore
-            // Interceptors are synchronous, so we use runBlocking to fetch from DataStore
-            val token = runBlocking { LibraroApp.preferenceManager.authToken.first() }
-            
-            if (!token.isNullOrEmpty()) {
-                requestBuilder.addHeader("Authorization", "Bearer $token")
-            } else {
-                // If no token, use a fallback API key if defined in build.gradle
-                 requestBuilder.addHeader("x-api-key", BuildConfig.API_TOKEN)
+                .addHeader("x-api-key", BuildConfig.API_TOKEN)
+            val deviceId = runBlocking { LibraroApp.preferenceManager.deviceId.first() }
+            if(!deviceId.isNullOrEmpty()){
+                requestBuilder.addHeader("device_id", deviceId)
             }
-
             chain.proceed(requestBuilder.build())
         }
         .connectTimeout(1, TimeUnit.MINUTES)
@@ -70,5 +103,6 @@ object RetrofitClient {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
+    val userAuthApiService: ApiService = retrofitUserAuth.create(ApiService::class.java)
     val apiService: ApiService = retrofit.create(ApiService::class.java)
 }

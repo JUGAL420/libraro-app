@@ -59,6 +59,9 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.swiperefreshlayout)
 
+    // Razorpay
+    implementation("com.razorpay:checkout:1.6.40")
+
     // MVVM & Architecture Components
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)

@@ -9,12 +9,15 @@ import com.techito.libraro.data.local.PreferenceManager
  */
 class LibraroApp : Application() {
     companion object {
+        lateinit var instance: LibraroApp
+            private set
         lateinit var preferenceManager: PreferenceManager
             private set
     }
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
         
         // Initialize PreferenceManager singleton
         preferenceManager = PreferenceManager.getInstance(this)

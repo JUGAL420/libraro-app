@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.techito.libraro.R
@@ -40,26 +41,52 @@ class AdminSignInActivity : AppCompatActivity() {
 
         handleInsets()
         setupSignUpText()
-        setupNavigationObserver()
-        binding.tvForgotPassword.setOnClickListener {
-            startActivity(Intent(this, AdminForgotPasswordActivity::class.java))
-        }
+        setupObservers()
+        
         binding.tvForgotPassword.setOnClickListener {
             startActivity(Intent(this, AdminForgotPasswordActivity::class.java))
         }
     }
 
-    private fun setupNavigationObserver() {
+    private fun setupObservers() {
         viewModel.navigateToHome.observe(this) { shouldNavigate ->
             if (shouldNavigate) {
                 startActivity(Intent(this, MainActivity::class.java))
                 viewModel.onNavigationHandled()
+                finish()
             }
+        }
+
+        viewModel.navigateToOtp.observe(this) { libraryId ->
+            if (!libraryId.isNullOrBlank()) {
+                startActivity(Intent(this, AdminOtpVerificationActivity::class.java)
+                    .putExtra("library_id", libraryId)
+                    .putExtra("email", viewModel.signInEmail.value))
+                viewModel.onNavigationHandled()
+            }
+        }
+
+        viewModel.navigateToPlanSelection.observe(this) { response ->
+            if (response != null) {
+                startActivity(Intent(this, AdminPlanSelectionActivity::class.java))
+                viewModel.onNavigationHandled()
+            }
+        }
+
+        viewModel.errorMessage.observe(this) { message ->
+            message?.let {
+                AppUtils.showToast(this, it)
+                viewModel.onErrorHandled()
+            }
+        }
+
+        viewModel.isLoading.observe(this) { isLoading ->
+            binding.layoutProgress.clProgress.isVisible = isLoading
         }
     }
 
     private fun setupSignUpText() {
-        val fullText = getString(R.string.dont_have_account) +" "+ getString(R.string.sign_up)
+        val fullText = getString(R.string.dont_have_account) + " " + getString(R.string.sign_up)
         val spannableString = SpannableString(fullText)
         val signUpPart = getString(R.string.sign_up)
         val startIndex = fullText.indexOf(signUpPart)
@@ -77,12 +104,14 @@ class AdminSignInActivity : AppCompatActivity() {
             }
         }
 
-        spannableString.setSpan(
-            clickableSpan,
-            startIndex,
-            startIndex + signUpPart.length,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+        if (startIndex != -1) {
+            spannableString.setSpan(
+                clickableSpan,
+                startIndex,
+                startIndex + signUpPart.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
 
         binding.tvSignUp.text = spannableString
         binding.tvSignUp.movementMethod = LinkMovementMethod.getInstance()

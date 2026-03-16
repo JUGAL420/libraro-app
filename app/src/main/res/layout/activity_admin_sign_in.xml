@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.techito.libraro.viewmodel.AdminAuthViewModel" />
@@ -185,10 +184,11 @@
                         android:id="@+id/tvSignUp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="11dp"
                         android:fontFamily="@font/outfit_regular"
                         android:textColor="@color/color_8C8C8C"
                         android:textSize="14sp"
+                        android:padding="4dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/btnSignIn"
@@ -199,5 +199,10 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
+
+        <include
+            android:id="@+id/layoutProgress"
+            layout="@layout/layout_progress" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

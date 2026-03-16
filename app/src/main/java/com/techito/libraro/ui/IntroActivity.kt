@@ -20,6 +20,7 @@ import com.techito.libraro.databinding.ActivityIntroBinding
 import com.techito.libraro.model.IntroSlide
 import com.techito.libraro.ui.adapter.IntroSliderAdapter
 import com.techito.libraro.utils.AppUtils
+import com.techito.libraro.utils.AppUtils.dpToPx
 import kotlinx.coroutines.launch
 
 class IntroActivity : AppCompatActivity() {
@@ -42,8 +43,12 @@ class IntroActivity : AppCompatActivity() {
             if (binding.vpIntroSlider.currentItem + 1 < introSliderAdapter.itemCount) {
                 binding.vpIntroSlider.currentItem += 1
             } else {
-                navigateToMain()
+                navigateToNext()
             }
+        }
+
+        binding.btnSkip.setOnClickListener {
+            navigateToNext()
         }
     }
 
@@ -70,7 +75,8 @@ class IntroActivity : AppCompatActivity() {
 
     private fun setupViewPager() {
         binding.vpIntroSlider.adapter = introSliderAdapter
-        binding.vpIntroSlider.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        binding.vpIntroSlider.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 setCurrentIndicator(position)
@@ -86,9 +92,10 @@ class IntroActivity : AppCompatActivity() {
     private fun setupIndicators() {
         binding.llIndicators.removeAllViews()
         val itemCount = introSliderAdapter.itemCount
+        val margin = 8.dpToPx(this)
         val layoutParams = LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
-        layoutParams.setMargins(8, 0, 8, 0)
-        
+        layoutParams.setMargins(margin, 0, margin, 0)
+
         for (i in 0 until itemCount) {
             val indicator = ImageView(this)
             indicator.setImageDrawable(
@@ -115,7 +122,7 @@ class IntroActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateToMain() {
+    private fun navigateToNext() {
         lifecycleScope.launch {
             LibraroApp.preferenceManager.setFirstTimeLaunch(false)
             startActivity(Intent(this@IntroActivity, LoginOptionActivity::class.java))
@@ -125,7 +132,12 @@ class IntroActivity : AppCompatActivity() {
 
     private fun handleInsets() {
         val mainLayout = binding.mainLayout
-        val originalPadding = Rect(mainLayout.paddingLeft, mainLayout.paddingTop, mainLayout.paddingRight, mainLayout.paddingBottom)
+        val originalPadding = Rect(
+            mainLayout.paddingLeft,
+            mainLayout.paddingTop,
+            mainLayout.paddingRight,
+            mainLayout.paddingBottom
+        )
 
         ViewCompat.setOnApplyWindowInsetsListener(mainLayout) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

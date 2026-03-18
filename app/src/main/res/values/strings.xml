@@ -60,6 +60,7 @@
     <string name="upi_id_qr">UPI ID (for taking payment on QR bookings)</string>
     <string name="branch_master">BRANCH MASTER</string>
     <string name="total_seats">Total Seats</string>
+    <string name="total_seats_display">Total Seats : %1$d</string>
     <string name="operating_hrs">Operating Hrs.</string>
     <string name="locker_amt">Locker Amt.</string>
     <string name="extend_days">Extend Days</string>

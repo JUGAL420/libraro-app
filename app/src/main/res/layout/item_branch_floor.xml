@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="8dp"
+        app:cardBackgroundColor="#F8F9FF"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:strokeColor="#CFD5FF"
+        app:strokeWidth="0.5dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="13dp">
+
+            <!-- Active Status -->
+            <LinearLayout
+                android:id="@+id/llStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <View
+                    android:id="@+id/viewStatus"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginHorizontal="6dp"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="#60B03E" />
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/outfit_medium"
+                    android:text="Active"
+                    android:textColor="#60B03E"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <!-- Floor/Block Name Section -->
+            <TextView
+                android:id="@+id/tvLabelName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_regular"
+                android:text="Floor / Block Name"
+                android:textColor="@color/color_737373"
+                android:textSize="11sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvFloorName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/outfit_medium"
+                android:maxLines="1"
+                android:text="First Floor"
+                android:textColor="@color/edit_text_color_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/llStatus"
+                app:layout_constraintStart_toStartOf="@+id/tvLabelName"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelName" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.33" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.66" />
+
+            <!-- From Seat Section -->
+            <TextView
+                android:id="@+id/tvLabelFromSeat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/outfit_regular"
+                android:text="From Seat"
+                android:textColor="@color/color_737373"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvFloorName" />
+
+            <TextView
+                android:id="@+id/tvFromSeat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="1"
+                android:textColor="@color/edit_text_color_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvLabelFromSeat"
+                app:layout_constraintStart_toStartOf="@+id/tvLabelFromSeat"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelFromSeat" />
+
+            <!-- To Seat Section -->
+            <TextView
+                android:id="@+id/tvLabelToSeat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_regular"
+                android:text="To Seat"
+                android:textColor="@color/color_737373"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintStart_toEndOf="@+id/guideline1"
+                app:layout_constraintTop_toTopOf="@+id/tvLabelFromSeat" />
+
+
+            <TextView
+                android:id="@+id/tvToSeat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="20"
+                android:textColor="@color/edit_text_color_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvLabelToSeat"
+                app:layout_constraintStart_toStartOf="@+id/tvLabelToSeat"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelToSeat" />
+
+            <!-- Total Seats Section -->
+            <TextView
+                android:id="@+id/tvLabelTotalSeats"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_regular"
+                android:text="Total Seats"
+                android:textColor="@color/color_737373"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/tvLabelFromSeat" />
+
+
+            <TextView
+                android:id="@+id/tvTotalSeats"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="20"
+                android:textColor="@color/edit_text_color_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvLabelTotalSeats"
+                app:layout_constraintStart_toStartOf="@+id/tvLabelTotalSeats"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelTotalSeats" />
+
+            <!-- Actions -->
+            <LinearLayout
+                android:id="@+id/llActions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvFromSeat">
+
+                <ImageView
+                    android:id="@+id/ivEdit"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="@color/color_E3E7FF"
+                    android:contentDescription="@string/app_name"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_edit" />
+
+                <ImageView
+                    android:id="@+id/ivDelete"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="12dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="@color/color_E3E7FF"
+                    android:contentDescription="@string/app_name"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_delete" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

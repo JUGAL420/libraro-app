@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="8dp"
+        app:cardBackgroundColor="#F8F9FF"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:strokeColor="#CFD5FF"
+        app:strokeWidth="0.5dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="13dp">
+
+            <!-- Profile Image -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivUser"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="#D9D9D9"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                tools:src="@tools:sample/avatars" />
+
+            <!-- Full Name Section -->
+            <TextView
+                android:id="@+id/tvLabelFullName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/outfit_regular"
+                android:text="Full Name"
+                android:textColor="@color/color_737373"
+                android:textSize="11sp"
+                app:layout_constraintStart_toEndOf="@+id/ivUser"
+                app:layout_constraintTop_toTopOf="@+id/ivUser" />
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Pawan Rathore"
+                android:textColor="@color/edit_text_color_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/llStatus"
+                app:layout_constraintStart_toStartOf="@+id/tvLabelFullName"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelFullName" />
+
+            <!-- Active Status -->
+            <LinearLayout
+                android:id="@+id/llStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <View
+                    android:id="@+id/viewStatus"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginHorizontal="6dp"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="#60B03E" />
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/outfit_medium"
+                    android:text="Active"
+                    android:textColor="#60B03E"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <!-- Mobile Number Section -->
+            <TextView
+                android:id="@+id/tvLabelMobile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="6dp"
+                android:fontFamily="@font/outfit_regular"
+                android:text="Mobile Number"
+                android:textColor="@color/color_737373"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivUser" />
+
+            <TextView
+                android:id="@+id/tvUserMobile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="+91-8114479678"
+                android:textColor="@color/edit_text_color_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvLabelMobile"
+                app:layout_constraintStart_toStartOf="@+id/tvLabelMobile"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelMobile" />
+
+            <!-- Email Section -->
+            <TextView
+                android:id="@+id/tvLabelEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_regular"
+                android:text="Email Id"
+                android:textColor="@color/color_737373"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/tvLabelMobile" />
+
+            <TextView
+                android:id="@+id/tvUserEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="info@gmail.com"
+                android:textColor="@color/edit_text_color_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tvLabelEmail"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelEmail" />
+
+            <!-- Role Section -->
+            <TextView
+                android:id="@+id/tvLabelRole"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/outfit_regular"
+                android:text="User Role"
+                android:textColor="@color/color_737373"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvUserMobile" />
+
+            <TextView
+                android:id="@+id/tvUserRole"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Library Manager"
+                android:textColor="@color/edit_text_color_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvLabelRole"
+                app:layout_constraintStart_toStartOf="@+id/tvLabelRole"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelRole" />
+
+            <!-- Branch Access Section -->
+            <TextView
+                android:id="@+id/tvLabelBranch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_regular"
+                android:text="Branch Access"
+                android:textColor="@color/color_737373"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/tvLabelRole" />
+
+            <TextView
+                android:id="@+id/tvUserBranch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Branch 1, Branch 2"
+                android:textColor="@color/edit_text_color_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tvLabelBranch"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelBranch" />
+
+            <!-- Actions -->
+            <LinearLayout
+                android:id="@+id/llActions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvUserRole">
+
+                <ImageView
+                    android:id="@+id/ivPermission"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="@color/color_E3E7FF"
+                    android:contentDescription="@string/app_name"
+                    android:paddingVertical="8dp"
+                    android:src="@drawable/ic_permission" />
+
+                <ImageView
+                    android:id="@+id/ivEdit"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="12dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="@color/color_E3E7FF"
+                    android:contentDescription="@string/app_name"
+                    android:paddingVertical="8dp"
+                    android:src="@drawable/ic_edit" />
+
+                <ImageView
+                    android:id="@+id/ivDelete"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="12dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="@color/color_E3E7FF"
+                    android:contentDescription="@string/app_name"
+                    android:paddingVertical="8dp"
+                    android:src="@drawable/ic_delete" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

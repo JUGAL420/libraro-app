@@ -92,6 +92,13 @@ dependencies {
     // Security
     implementation(libs.security.crypto)
 
+    // Play Services
+    implementation(libs.play.review)
+    implementation(libs.play.review.ktx)
+
+    // UCrop
+    implementation(libs.ucrop)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

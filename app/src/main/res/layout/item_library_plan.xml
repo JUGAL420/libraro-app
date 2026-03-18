@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="8dp"
+        app:cardBackgroundColor="#F8F9FF"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:strokeColor="#CFD5FF"
+        app:strokeWidth="0.5dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="13dp"
+            android:paddingHorizontal="16dp">
+
+            <!-- Active Status -->
+            <LinearLayout
+                android:id="@+id/llStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <View
+                    android:id="@+id/viewStatus"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginHorizontal="6dp"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="#60B03E" />
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/outfit_medium"
+                    android:text="Active"
+                    android:textColor="#60B03E"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvLabelName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_regular"
+                android:text="Plan Name"
+                android:textColor="@color/color_737373"
+                android:textSize="11sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvPlanName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Monthly"
+                android:layout_marginEnd="6dp"
+                android:textColor="@color/edit_text_color_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/llStatus"
+                app:layout_constraintStart_toStartOf="@+id/tvLabelName"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelName" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <TextView
+                android:id="@+id/tvLabelMonths"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/outfit_regular"
+                android:text="No. of Month"
+                android:textColor="@color/color_737373"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPlanName" />
+
+            <TextView
+                android:id="@+id/tvMonths"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="1"
+                android:textColor="@color/edit_text_color_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvLabelMonths"
+                app:layout_constraintStart_toStartOf="@+id/tvLabelMonths"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelMonths" />
+
+
+
+            <TextView
+                android:id="@+id/tvLabelDays"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_regular"
+                android:text="Plan Days"
+                android:textColor="@color/color_737373"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/tvLabelMonths" />
+
+            <TextView
+                android:id="@+id/tvDays"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="30"
+                android:textColor="@color/edit_text_color_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvLabelDays"
+                app:layout_constraintStart_toStartOf="@+id/tvLabelDays"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelDays" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvMonths">
+
+                <ImageView
+                    android:id="@+id/ivEdit"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="#E3E7FF"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_edit"
+                    app:tint="@color/app_color_1" />
+
+                <ImageView
+                    android:id="@+id/ivDelete"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="#E3E7FF"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_delete"
+                    app:tint="@color/app_color_1" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

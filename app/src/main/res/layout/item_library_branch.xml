@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="8dp"
+        app:cardBackgroundColor="#F8F9FF"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:strokeColor="#CFD5FF"
+        app:strokeWidth="0.5dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="13dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivBranchProfile"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_circle"
+                android:backgroundTint="#D9D9D9"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="● Active"
+                android:textColor="#60B03E"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvLabelBranchName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/outfit_regular"
+                android:text="Branch Name"
+                android:textColor="@color/color_737373"
+                android:textSize="11sp"
+                app:layout_constraintStart_toEndOf="@+id/ivBranchProfile"
+                app:layout_constraintTop_toTopOf="@+id/ivBranchProfile" />
+
+            <TextView
+                android:id="@+id/tvBranchName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="VINAYK LIBRARY"
+                android:textColor="@color/edit_text_color_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/tvStatus"
+                app:layout_constraintStart_toStartOf="@+id/tvLabelBranchName"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelBranchName" />
+
+            <TextView
+                android:id="@+id/tvCustomBranchName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Custom Name"
+                android:textColor="@color/app_color_1"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@+id/tvBranchName" />
+
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_regular"
+                android:text="Address: 955, VINOBA BHAVE NAGAR KOTA, RAJASTAHAN 324005"
+                android:textColor="@color/color_737373"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@+id/tvCustomBranchName" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <TextView
+                android:id="@+id/tvLabelMobile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/outfit_regular"
+                android:text="Mobile Number"
+                android:textColor="@color/color_737373"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvAddress" />
+
+            <TextView
+                android:id="@+id/tvMobile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="+91-8114479678"
+                android:textColor="@color/edit_text_color_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvLabelMobile"
+                app:layout_constraintStart_toStartOf="@+id/tvLabelMobile"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelMobile" />
+
+
+            <TextView
+                android:id="@+id/tvLabelEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_regular"
+                android:text="Email Id"
+                android:textColor="@color/color_737373"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/tvLabelMobile" />
+
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="info@gmail.com"
+                android:textColor="@color/edit_text_color_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvLabelEmail"
+                app:layout_constraintStart_toStartOf="@+id/tvLabelEmail"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelEmail" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvBranchImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="horizontal"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="true"
+                tools:listitem="@layout/item_branch_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvMobile" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvBranchImage">
+
+                <ImageView
+                    android:id="@+id/ivEdit"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="#E3E7FF"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_edit"
+                    app:tint="@color/app_color_1" />
+
+                <ImageView
+                    android:id="@+id/ivBooking"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="#E3E7FF"
+                    android:padding="8dp"
+                    android:src="@drawable/nav_book"
+                    app:tint="@color/app_color_1" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

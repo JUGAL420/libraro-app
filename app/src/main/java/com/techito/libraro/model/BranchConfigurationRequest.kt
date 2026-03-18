@@ -31,7 +31,7 @@ data class BranchConfigurationBranchMaster(
     @SerializedName("extend_days")
     var extendDays: Int?,
     @SerializedName("locker_amount")
-    var lockerAmount: Int?,
+    var lockerAmount: String?,
     @SerializedName("operating_hours")
     var operatingHours: Int?,
     @SerializedName("total_seats")
@@ -62,7 +62,7 @@ data class BranchConfigurationShift(
     @SerializedName("end_time")
     var endTime: String?,
     @SerializedName("price")
-    var price: Int?,
+    var price: String?,
     @SerializedName("start_time")
     var startTime: String?,
     @SerializedName("type")

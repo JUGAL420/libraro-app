@@ -13,6 +13,7 @@ import com.razorpay.Checkout
 import com.techito.libraro.LibraroApp
 import com.techito.libraro.R
 import com.techito.libraro.databinding.ActivitySplashBinding
+import com.techito.libraro.ui.library.MainActivity
 import com.techito.libraro.utils.AppUtils
 import com.techito.libraro.viewmodel.MainViewModel
 import kotlinx.coroutines.delay

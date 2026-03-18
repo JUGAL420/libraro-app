@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="8dp"
+        app:cardBackgroundColor="#F8F9FF"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:strokeColor="#CFD5FF"
+        app:strokeWidth="0.5dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="13dp"
+            android:paddingHorizontal="16dp">
+
+            <!-- Active Status -->
+            <LinearLayout
+                android:id="@+id/llStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <View
+                    android:id="@+id/viewStatus"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginHorizontal="6dp"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="#60B03E" />
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/outfit_medium"
+                    android:text="Active"
+                    android:textColor="#60B03E"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvLabelName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_regular"
+                android:text="Plan type / Shift name"
+                android:textColor="@color/color_737373"
+                android:textSize="11sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvShiftName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="Full Day"
+                android:textColor="@color/edit_text_color_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/llStatus"
+                app:layout_constraintStart_toStartOf="@+id/tvLabelName"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelName" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.33" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.66" />
+
+            <TextView
+                android:id="@+id/tvLabelStartTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="@font/outfit_regular"
+                android:text="Start Time"
+                android:textColor="@color/color_737373"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvShiftName" />
+
+            <TextView
+                android:id="@+id/tvStartTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="06:00 PM"
+                android:textColor="@color/edit_text_color_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvLabelStartTime"
+                app:layout_constraintStart_toStartOf="@+id/tvLabelStartTime"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelStartTime" />
+
+            <TextView
+                android:id="@+id/tvLabelEndTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_regular"
+                android:text="End Time"
+                android:textColor="@color/color_737373"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintStart_toEndOf="@+id/guideline1"
+                app:layout_constraintTop_toTopOf="@+id/tvLabelStartTime" />
+
+            <TextView
+                android:id="@+id/tvEndTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="02:00 PM"
+                android:textColor="@color/edit_text_color_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvLabelEndTime"
+                app:layout_constraintStart_toStartOf="@+id/tvLabelEndTime"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelEndTime" />
+
+            <TextView
+                android:id="@+id/tvLabelDuration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_regular"
+                android:text="Plan Duration (in hrs)"
+                android:textColor="@color/color_737373"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/tvLabelStartTime" />
+
+            <TextView
+                android:id="@+id/tvDuration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_medium"
+                android:text="8"
+                android:textColor="@color/edit_text_color_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvLabelDuration"
+                app:layout_constraintStart_toStartOf="@+id/tvLabelDuration"
+                app:layout_constraintTop_toBottomOf="@+id/tvLabelDuration" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvStartTime">
+
+                <ImageView
+                    android:id="@+id/ivEdit"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="#E3E7FF"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_edit"
+                    app:tint="@color/app_color_1" />
+
+                <ImageView
+                    android:id="@+id/ivDelete"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="#E3E7FF"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_delete"
+                    app:tint="@color/app_color_1" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

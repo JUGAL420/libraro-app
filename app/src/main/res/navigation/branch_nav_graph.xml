@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/branch_nav_graph"
+    app:startDestination="@id/branchProfileFragment">
+
+    <fragment
+        android:id="@+id/branchProfileFragment"
+        android:name="com.techito.libraro.ui.library.branch.fragments.BranchProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_branch_profile" />
+
+    <fragment
+        android:id="@+id/branchDetailsFragment"
+        android:name="com.techito.libraro.ui.library.branch.fragments.BranchDetailsFragment"
+        android:label="Details"
+        tools:layout="@layout/fragment_branch_details" />
+
+    <fragment
+        android:id="@+id/branchMasterFragment"
+        android:name="com.techito.libraro.ui.library.branch.fragments.BranchMasterFragment"
+        android:label="Master"
+        tools:layout="@layout/fragment_branch_master" />
+</navigation>

@@ -8,7 +8,9 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.LinearGradient
+import android.graphics.Rect
 import android.graphics.Shader
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -28,11 +30,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColorInt
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import com.techito.libraro.R
 import java.io.Serializable
 import java.text.SimpleDateFormat
@@ -40,6 +47,7 @@ import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
 import java.util.UUID
+import kotlin.math.abs
 
 /**
  * Utility object containing helper methods for UI manipulations, animations,
@@ -163,7 +171,7 @@ object AppUtils {
             val paint = textView.paint
             val width = paint.measureText(textView.text.toString())
             if (width <= 0f) return@post
-            
+
             val context = textView.context
             val colorInts = colors.map { ContextCompat.getColor(context, it) }.toIntArray()
 
@@ -185,7 +193,9 @@ object AppUtils {
      * @param activity The activity context used to calculate window height.
      */
     fun setupFullHeight(bottomSheetDialog: BottomSheetDialog, activity: Activity) {
-        val bottomSheet = bottomSheetDialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet) ?: return
+        val bottomSheet =
+            bottomSheetDialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+                ?: return
         val behavior = BottomSheetBehavior.from(bottomSheet)
         val layoutParams = bottomSheet.layoutParams
         val windowHeight = getWindowHeight(activity)
@@ -221,7 +231,7 @@ object AppUtils {
     }
 
     /**
-     * Retrieves a unique device ID (ANDROID_ID). 
+     * Retrieves a unique device ID (ANDROID_ID).
      * If the ID is unavailable or unreliable, returns a random UUID.
      *
      * @param context The application context.
@@ -244,7 +254,8 @@ object AppUtils {
      * @return True if internet is available, false otherwise.
      */
     fun isNetworkAvailable(context: Context): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val network = connectivityManager.activeNetwork ?: return false
         val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
         return when {
@@ -318,10 +329,146 @@ object AppUtils {
         datePicker.addOnPositiveButtonClickListener { selection ->
             val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
             calendar.timeInMillis = selection
-            val formattedDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
+            val formattedDate =
+                SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.time)
             onDateSelected(formattedDate)
         }
 
         datePicker.show(fragmentManager, "MATERIAL_DATE_PICKER")
+    }
+
+    /**
+     * Shows a MaterialTimePicker and returns the selected time in hh:mm a format.
+     *
+     * @param fragmentManager The FragmentManager to show the dialog.
+     * @param title The title for the time picker.
+     * @param onTimeSelected Callback function that receives the formatted time string.
+     */
+    fun showTimePicker(
+        fragmentManager: FragmentManager,
+        title: String,
+        onTimeSelected: (String) -> Unit
+    ) {
+        val picker = MaterialTimePicker.Builder()
+            .setTimeFormat(TimeFormat.CLOCK_12H)
+            .setHour(12)
+            .setMinute(0)
+            .setTitleText(title)
+            .build()
+
+        picker.addOnPositiveButtonClickListener {
+            val hour24 = picker.hour
+            val minute = picker.minute
+            val calendar = Calendar.getInstance()
+            calendar.set(Calendar.HOUR_OF_DAY, hour24)
+            calendar.set(Calendar.MINUTE, minute)
+
+            val sdf = SimpleDateFormat("hh:mm a", Locale.getDefault())
+            val formattedTime = sdf.format(calendar.time)
+            onTimeSelected(formattedTime)
+        }
+
+        picker.show(fragmentManager, "MATERIAL_TIME_PICKER")
+    }
+
+    /**
+     * Dynamically handles system bar insets for a given view by applying appropriate padding.
+     * This ensures content isn't obscured by status or navigation bars when using edge-to-edge layouts.
+     *
+     * @param view The target view to apply padding to.
+     * @param applyTop True to apply top inset padding (Status Bar). Default is true.
+     * @param applyBottom True to apply bottom inset padding (Navigation Bar). Default is true.
+     */
+    fun handleSystemBars(view: View, applyTop: Boolean = true, applyBottom: Boolean = true) {
+        val originalPadding = Rect(
+            view.paddingLeft,
+            view.paddingTop,
+            view.paddingRight,
+            view.paddingBottom
+        )
+
+        ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(
+                originalPadding.left,
+                if (applyTop) originalPadding.top + systemBars.top else originalPadding.top,
+                originalPadding.right,
+                if (applyBottom) originalPadding.bottom + systemBars.bottom else originalPadding.bottom
+            )
+            insets
+        }
+    }
+
+    /**
+     * Extracts initials from a given name string.
+     * If there are two or more words, it takes the first letter of the first and second words.
+     * If there is only one word, it takes the first two letters of that word.
+     *
+     * @param name The name string to extract initials from.
+     * @return A capitalized string containing the initials.
+     */
+    fun getInitials(name: String): String {
+        val words = name.trim()
+            .split("\\s+".toRegex())
+            .filter { it.isNotEmpty() }
+
+        return when {
+            words.size >= 2 -> {
+                "${words[0].first()}${words[1].first()}".uppercase()
+            }
+            words.size == 1 -> {
+                words[0].take(2).uppercase()
+            }
+            else -> ""
+        }
+    }
+
+    /**
+     * Deterministically picks a background color for an avatar based on the provided name.
+     *
+     * @param name The name string used to calculate the color index.
+     * @return An integer representing the chosen color.
+     */
+    fun getAvatarColor(name: String): Int {
+        val colors = listOf(
+            "#1B1464", "#2E7D32", "#C62828", "#1565C0",
+            "#6A1B9A", "#EF6C00", "#00838F", "#4E342E"
+        )
+
+        val index = abs(name.hashCode()) % colors.size
+        return colors[index].toColorInt()
+    }
+
+    /**
+     * Determines whether white or black text should be used based on the brightness of the background color.
+     * Uses the standard formula for luminance.
+     *
+     * @param bgColor The background color integer.
+     * @return Color.WHITE if the background is dark, Color.BLACK otherwise.
+     */
+    fun getTextColor(bgColor: Int): Int {
+        val darkness =
+            1 - (0.299 * Color.red(bgColor) +
+                    0.587 * Color.green(bgColor) +
+                    0.114 * Color.blue(bgColor)) / 255
+
+        return if (darkness >= 0.5) Color.WHITE else Color.BLACK
+    }
+
+    /**
+     * Configures a TextView to display a user's avatar with their initials, 
+     * a background color based on their name, and an appropriately contrasting text color.
+     *
+     * @param view The TextView to configure.
+     * @param name The name to generate initials and color for.
+     */
+    fun setAvatar(view: TextView, name: String) {
+
+        val bgColor = getAvatarColor(name)
+        val textColor = getTextColor(bgColor)
+
+        view.text = getInitials(name)
+        view.setTextColor(textColor)
+        view.setBackgroundColor(bgColor)
     }
 }

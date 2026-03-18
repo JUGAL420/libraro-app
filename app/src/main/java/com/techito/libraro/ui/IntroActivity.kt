@@ -1,7 +1,6 @@
 package com.techito.libraro.ui
 
 import android.content.Intent
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.ImageView
@@ -9,8 +8,6 @@ import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
@@ -18,7 +15,7 @@ import com.techito.libraro.LibraroApp
 import com.techito.libraro.R
 import com.techito.libraro.databinding.ActivityIntroBinding
 import com.techito.libraro.model.IntroSlide
-import com.techito.libraro.ui.adapter.IntroSliderAdapter
+import com.techito.libraro.ui.library.adapter.IntroSliderAdapter
 import com.techito.libraro.utils.AppUtils
 import com.techito.libraro.utils.AppUtils.dpToPx
 import kotlinx.coroutines.launch
@@ -33,7 +30,7 @@ class IntroActivity : AppCompatActivity() {
         enableEdgeToEdge()
         AppUtils.changeStatusBarColor(this, R.color.white, true)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_intro)
-        handleInsets()
+        AppUtils.handleSystemBars(binding.mainLayout)
         initAdapter()
         setupViewPager()
         setupIndicators()
@@ -127,27 +124,6 @@ class IntroActivity : AppCompatActivity() {
             LibraroApp.preferenceManager.setFirstTimeLaunch(false)
             startActivity(Intent(this@IntroActivity, LoginOptionActivity::class.java))
             finish()
-        }
-    }
-
-    private fun handleInsets() {
-        val mainLayout = binding.mainLayout
-        val originalPadding = Rect(
-            mainLayout.paddingLeft,
-            mainLayout.paddingTop,
-            mainLayout.paddingRight,
-            mainLayout.paddingBottom
-        )
-
-        ViewCompat.setOnApplyWindowInsetsListener(mainLayout) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(
-                originalPadding.left,
-                originalPadding.top + systemBars.top,
-                originalPadding.right,
-                originalPadding.bottom + systemBars.bottom
-            )
-            insets
         }
     }
 }

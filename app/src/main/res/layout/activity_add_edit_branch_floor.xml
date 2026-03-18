@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="isEdit"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_screen">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="34dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/app_name"
+                android:padding="12dp"
+                android:src="@drawable/ic_back_arrow_2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/app_color_1" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/outfit_semibold"
+                android:text='@{isEdit ? "Edit Floor / Block" : "Add Floor / Block"}'
+                android:textColor="@color/app_color_1"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Add Floor / Block" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clHeader">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="64dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilFloorNo"
+                    style="@style/CustomTextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="Floor / Block No"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etFloorNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/outfit_medium"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:lines="1"
+                        android:paddingVertical="13dp"
+                        android:textColor="@color/edit_text_color_323232"
+                        android:textSize="14sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilFloorName"
+                    style="@style/CustomTextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:hint="Floor / Block Name *"
+                    app:layout_constraintTop_toBottomOf="@+id/tilFloorNo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etFloorName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/outfit_medium"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapSentences"
+                        android:lines="1"
+                        android:paddingVertical="13dp"
+                        android:textColor="@color/edit_text_color_323232"
+                        android:textSize="14sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilFromSeat"
+                    style="@style/CustomTextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="12dp"
+                    android:hint="From Seat *"
+                    app:layout_constraintEnd_toStartOf="@+id/tilToSeat"
+                    app:layout_constraintTop_toBottomOf="@+id/tilFloorName"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etFromSeat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/outfit_medium"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:lines="1"
+                        android:paddingVertical="13dp"
+                        android:textColor="@color/edit_text_color_323232"
+                        android:textSize="14sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilToSeat"
+                    style="@style/CustomTextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:hint="Seat To *"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tilFromSeat"
+                    app:layout_constraintTop_toTopOf="@+id/tilFromSeat">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etToSeat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/outfit_medium"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:lines="1"
+                        android:paddingVertical="13dp"
+                        android:textColor="@color/edit_text_color_323232"
+                        android:textSize="14sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilTotalSeat"
+                    style="@style/CustomTextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:hint="Total Seat *"
+                    app:boxBackgroundColor="#F5F5F5"
+                    app:layout_constraintTop_toBottomOf="@+id/tilFromSeat"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintWidth_percent="0.48">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etTotalSeat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:fontFamily="@font/outfit_medium"
+                        android:inputType="number"
+                        android:lines="1"
+                        android:paddingVertical="13dp"
+                        android:textColor="@color/edit_text_color_323232"
+                        android:textSize="14sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/btn_blue"
+            android:fontFamily="@font/outfit_semibold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:letterSpacing="0"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="12dp"
+            android:text='@{isEdit ? "Update" : "Save"}'
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="Save" />
+
+
+        <include
+            android:id="@+id/layoutProgress"
+            layout="@layout/layout_progress" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

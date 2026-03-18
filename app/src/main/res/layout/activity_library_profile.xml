@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_screen"
+        tools:context=".ui.library.LibraryProfileActivity">
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/libraryImage"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_margin="8dp"
+                        android:background="@color/app_color_1"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+                        tools:src="@tools:sample/avatars" />
+
+                    <TextView
+                        android:id="@+id/tvLibraryImageText"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/bg_circle"
+                        android:fontFamily="@font/outfit_black"
+                        android:gravity="center"
+                        android:letterSpacing="0"
+                        android:text="AK"
+                        android:textColor="@color/app_color_1"
+                        android:textSize="42sp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/libraryImage"
+                        app:layout_constraintEnd_toEndOf="@+id/libraryImage"
+                        app:layout_constraintStart_toStartOf="@+id/libraryImage"
+                        app:layout_constraintTop_toTopOf="@+id/libraryImage" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/tvLibraryName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:fontFamily="@font/outfit_semibold"
+                    android:gravity="center"
+                    android:text="XYZ LIBRARY"
+                    android:textColor="@color/app_color_1"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tvPlanName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:fontFamily="@font/outfit_semibold"
+                    android:gravity="center"
+                    android:text="BASIC PLAN"
+                    android:textAllCaps="true"
+                    android:textColor="@color/color_34AE00"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/outfit_semibold"
+                    android:text="LIBRARY MASTERS"
+                    android:textColor="@color/color_A3A3A3"
+                    android:textSize="12sp" />
+
+                <!-- Menu Items -->
+                <include
+                    android:id="@+id/menuUsers"
+                    layout="@layout/item_profile_menu"
+                    app:title='@{"Users"}' />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/color_DEDEDE" />
+
+                <include
+                    android:id="@+id/menuBranch"
+                    layout="@layout/item_profile_menu"
+                    app:title='@{"Branches"}' />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/color_DEDEDE" />
+
+                <include
+                    android:id="@+id/menuFloor"
+                    layout="@layout/item_profile_menu"
+                    app:title='@{"Floor"}' />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/color_DEDEDE" />
+
+                <include
+                    android:id="@+id/menuPlan"
+                    layout="@layout/item_profile_menu"
+                    app:title='@{"Plan"}' />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/color_DEDEDE" />
+
+                <include
+                    android:id="@+id/menuPlanTypeShift"
+                    layout="@layout/item_profile_menu"
+                    app:title='@{"Plan Type / Shift"}' />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/color_DEDEDE" />
+
+                <include
+                    android:id="@+id/menuPlanPrice"
+                    layout="@layout/item_profile_menu"
+                    app:title='@{"Plan Price"}' />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/color_DEDEDE" />
+
+                <include
+                    android:id="@+id/menuExams"
+                    layout="@layout/item_profile_menu"
+                    app:title='@{"Exams"}' />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/color_DEDEDE" />
+
+                <include
+                    android:id="@+id/menuExpense"
+                    layout="@layout/item_profile_menu"
+                    app:title='@{"Expense"}' />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/color_DEDEDE" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/outfit_semibold"
+                    android:text="OTHER"
+                    android:textColor="@color/color_A3A3A3"
+                    android:textSize="12sp" />
+
+                <include
+                    android:id="@+id/menuReferEarn"
+                    layout="@layout/item_profile_menu"
+                    app:title='@{"Refer &amp; Earn"}' />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/color_DEDEDE" />
+
+                <include
+                    android:id="@+id/menuAbout"
+                    layout="@layout/item_profile_menu"
+                    app:title='@{"About"}' />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/color_DEDEDE" />
+
+                <include
+                    android:id="@+id/menuContact"
+                    layout="@layout/item_profile_menu"
+                    app:title='@{"Contact"}' />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/color_DEDEDE" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="16dp"
+                    android:padding="12dp"
+                    android:alpha="0.4"
+                    android:gravity="center">
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/app_icon"
+                        app:tint="@color/app_color_1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/outfit_semibold"
+                        android:gravity="center"
+                        android:text="@string/app_name"
+                        android:textColor="@color/app_color_1"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+        <include
+            android:id="@+id/layoutProgress"
+            layout="@layout/layout_progress" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -148,10 +148,17 @@ class BranchConfigurationViewModel : ViewModel() {
     }
 
     fun updateShiftType(position: Int, type: String) {
-        val shiftsList = shifts.value
-        val shift = shiftsList?.getOrNull(position) ?: return
+        val shiftsList = shifts.value ?: return
+        val shift = shiftsList.getOrNull(position) ?: return
         shift.type = type
-        shift.customName = type
+        // If "Custom" is selected, clear customName so user can type.
+        // Otherwise, customName matches the shift type.
+        if (type.equals("Custom", ignoreCase = true)) {
+            shift.customName = ""
+        } else {
+            shift.customName = type
+        }
+        
         shiftsList[position] = shift
         shifts.value = shiftsList
     }
@@ -180,19 +187,30 @@ class BranchConfigurationViewModel : ViewModel() {
             return
         }
 
+        val totalBranchSeats = totalSeats.value?.toIntOrNull() ?: 0
         val currentFloors = floors.value ?: mutableListOf()
+        var totalFloorSeats = 0
 
-        if (currentFloors.size > 1) {
-            currentFloors.forEachIndexed { index, floor ->
-                if (floor.floorName.isNullOrEmpty() || floor.seatFrom == null || floor.seatTo == null) {
-                    errorMessage.value =
-                        "All floor details are mandatory when multiple floors are added"
+        currentFloors.forEachIndexed { index, floor ->
+            val hasSomeData = !floor.floorName.isNullOrBlank() || floor.seatFrom != null || floor.seatTo != null
+            val isMandatory = currentFloors.size > 1
+
+            if (isMandatory || hasSomeData) {
+                if (floor.floorName.isNullOrBlank() || floor.seatFrom == null || floor.seatTo == null) {
+                    errorMessage.value = if (isMandatory) "Please complete all details for floor ${index + 1}."
+                    else "Enter all floor details."
                     return
                 } else if (floor.seatFrom!! > floor.seatTo!!) {
                     errorMessage.value = "Please enter valid seat range for floor ${index + 1}"
                     return
                 }
+                totalFloorSeats += (floor.seatTo!! - floor.seatFrom!! + 1)
             }
+        }
+
+        if (totalFloorSeats > totalBranchSeats) {
+            errorMessage.value = "Floors seats exceed branch capacity."
+            return
         }
 
         navigateToAddShifts.value = true
@@ -206,11 +224,18 @@ class BranchConfigurationViewModel : ViewModel() {
             return
         }
         var totalShiftHours = 0.0
-        currentShifts.forEach { shift ->
-            if (shift.startTime.isNullOrBlank() || shift.endTime.isNullOrBlank() || shift.price == null || shift.customName.isNullOrBlank()) {
-                errorMessage.value = "Please fill all shift details"
+        currentShifts.forEachIndexed { index, shift ->
+            if (shift.startTime.isNullOrBlank() || shift.endTime.isNullOrBlank() || shift.price.isNullOrBlank() || shift.type.isNullOrBlank()) {
+                errorMessage.value = "Please fill all details for Shift ${index + 1}"
                 return
             }
+            
+            // Required Custom Name validation
+            if (shift.customName.isNullOrBlank()) {
+                errorMessage.value = "Please enter Custom Name for Shift ${index + 1}"
+                return
+            }
+            
             totalShiftHours += shift.durationHours?.toDoubleOrNull() ?: 0.0
         }
         val branchHours = operatingHrs.value?.toDoubleOrNull() ?: 0.0
@@ -235,6 +260,27 @@ class BranchConfigurationViewModel : ViewModel() {
                 !it.floorName.isNullOrBlank() && it.seatFrom != null && it.seatTo != null
             }
 
+            // Create a copy of shifts and convert time format to HH:mm (24-hour)
+            val inputFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+
+            val shiftsToSubmit = shifts.value?.map { shift ->
+                shift.copy(
+                    startTime = try {
+                        val date = inputFormat.parse(shift.startTime ?: "")
+                        if (date != null) outputFormat.format(date) else shift.startTime
+                    } catch (e: Exception) {
+                        shift.startTime
+                    },
+                    endTime = try {
+                        val date = inputFormat.parse(shift.endTime ?: "")
+                        if (date != null) outputFormat.format(date) else shift.endTime
+                    } catch (e: Exception) {
+                        shift.endTime
+                    }
+                )
+            }
+
             val request = BranchConfigurationRequest(
                 branchDetails = BranchConfigurationBranchDetails(
                     branchName = branchName.value,
@@ -245,13 +291,13 @@ class BranchConfigurationViewModel : ViewModel() {
                 ),
                 branchMaster = BranchConfigurationBranchMaster(
                     extendDays = extendDays.value?.toIntOrNull(),
-                    lockerAmount = lockerAmt.value?.toIntOrNull(),
+                    lockerAmount = lockerAmt.value ?: "",
                     operatingHours = operatingHrs.value?.toIntOrNull(),
                     totalSeats = totalSeats.value?.toIntOrNull()
                 ),
                 floors = floorsToSubmit,
                 plan = planDays.value,
-                shifts = shifts.value
+                shifts = shiftsToSubmit
             )
 
             when (val result = authRepository.saveBranchConfiguration(request)) {

@@ -54,9 +54,9 @@
     <string name="step_2">Step 2</string>
     <string name="add_branch_and_floor">Add Branch and Floor</string>
     <string name="branch_details">BRANCH DETAILS</string>
-    <string name="branch_name">Branch Name</string>
+    <string name="branch_name">Branch Name *</string>
     <string name="founder_s_day">Founder\'s day</string>
-    <string name="contact_no_whatsapp">Contact No (WhatsApp No.)</string>
+    <string name="contact_no_whatsapp">Contact No (WhatsApp No.) *</string>
     <string name="upi_id_qr">UPI ID (for taking payment on QR bookings)</string>
     <string name="branch_master">BRANCH MASTER</string>
     <string name="total_seats">Total Seats</string>

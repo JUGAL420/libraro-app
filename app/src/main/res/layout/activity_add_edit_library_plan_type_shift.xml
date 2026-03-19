@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingHorizontal="16dp"
-                android:paddingBottom="64dp">
+                android:paddingBottom="84dp">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilShiftName"
@@ -84,6 +84,8 @@
                     app:boxStrokeColor="@color/box_stroke_color"
                     app:boxStrokeWidth="1dp"
                     app:boxStrokeWidthFocused="1dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:endIconDrawable="@drawable/ic_down_arrow_14"
                     app:endIconTint="@color/app_color_1"
                     app:hintTextAppearance="@style/HintTextAppearance"

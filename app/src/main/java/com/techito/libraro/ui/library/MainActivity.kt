@@ -1,5 +1,6 @@
 package com.techito.libraro.ui.library
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import androidx.activity.enableEdgeToEdge
@@ -8,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.techito.libraro.LibraroApp
 import com.techito.libraro.R
 import com.techito.libraro.databinding.ActivityMainBinding
 import com.techito.libraro.utils.AppUtils
@@ -33,6 +35,17 @@ class MainActivity : AppCompatActivity() {
         setupNavigation()
         setupSearchLogic()
         setupRefreshLogic()
+        setupListeners()
+        observeViewModel()
+        
+        // Fetch library details on start
+        viewModel.fetchLibraryDetails()
+    }
+
+    private fun setupListeners() {
+        binding.ivProfile.setOnClickListener {
+            startActivity(Intent(this, LibraryProfileActivity::class.java))
+        }
     }
 
     private fun setupNavigation() {
@@ -80,6 +93,28 @@ class MainActivity : AppCompatActivity() {
                     // Default behavior if not implemented
                     viewModel.onRefreshHandled()
                 }
+            }
+        }
+    }
+
+    private fun observeViewModel() {
+        viewModel.errorMessage.observe(this) { message ->
+            message?.let {
+                AppUtils.showToast(this@MainActivity, it)
+                viewModel.errorMessage.value = null
+            }
+        }
+
+        viewModel.unAuthenticated.observe(this) { unAuthenticated ->
+            if(unAuthenticated){
+                LibraroApp.logout(this@MainActivity)
+            }
+        }
+        
+        viewModel.libraryDetails.observe(this) { details ->
+            details?.let {
+                // TODO : Update UI components if needed based on library details
+//                binding.tvLibraryName.text = it.libraryName
             }
         }
     }

@@ -11,12 +11,16 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import com.techito.libraro.LibraroApp
 import com.techito.libraro.R
 import com.techito.libraro.databinding.FragmentConfigurationBranchShiftBinding
+import com.techito.libraro.ui.LoginOptionActivity
 import com.techito.libraro.ui.library.MainActivity
 import com.techito.libraro.ui.library.adapter.BranchConfigurationShiftAdapter
 import com.techito.libraro.utils.AppUtils
 import com.techito.libraro.viewmodel.BranchConfigurationViewModel
+import kotlinx.coroutines.launch
 
 class ConfigurationBranchShiftFragment : Fragment() {
 
@@ -64,13 +68,13 @@ class ConfigurationBranchShiftFragment : Fragment() {
         // Observe Success state
         viewModel.configurationSuccess.observe(viewLifecycleOwner) { success ->
             if (success) {
-//                AppUtils.showToast(requireContext(), "Branch Configuration Saved Successfully!")
-                // Navigate to next screen (e.g., Dashboard)
-                startActivity(Intent(requireActivity(), MainActivity::class.java))
-                requireActivity().finish()
+                lifecycleScope.launch {
+                    LibraroApp.preferenceManager.setLoggedIn(true)
+                    startActivity(Intent(requireActivity(), MainActivity::class.java))
+                    requireActivity().finishAffinity()
+                }
             }
         }
-
 
     }
 

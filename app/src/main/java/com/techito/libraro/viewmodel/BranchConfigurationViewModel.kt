@@ -11,6 +11,7 @@ import com.techito.libraro.model.BranchConfigurationFloor
 import com.techito.libraro.model.BranchConfigurationPlan
 import com.techito.libraro.model.BranchConfigurationRequest
 import com.techito.libraro.model.BranchConfigurationShift
+import com.techito.libraro.model.LibraryDetail
 import com.techito.libraro.model.StaticDataListResponse
 import com.techito.libraro.model.StaticMonthlyOption
 import com.techito.libraro.repository.AuthRepository
@@ -46,7 +47,7 @@ class BranchConfigurationViewModel : ViewModel() {
 
     // Step 3: Shifts
     val shifts = MutableLiveData<MutableList<BranchConfigurationShift>>(
-        mutableListOf(BranchConfigurationShift("", null, "", null, "", ""))
+        mutableListOf(BranchConfigurationShift("", null, "", null, "", "", ""))
     )
 
     // UI State & Master Data
@@ -57,10 +58,12 @@ class BranchConfigurationViewModel : ViewModel() {
     val errorMessage = MutableLiveData<String?>()
 
     val navigateToAddShifts = MutableLiveData<Boolean>(false)
+    val unAuthenticated = MutableLiveData<Boolean>(false)
     val configurationSuccess = MutableLiveData<Boolean>(false)
 
     val planTypeNames = MutableLiveData<List<String>>(emptyList())
 
+    val libraryDetails = MutableLiveData<LibraryDetail?>()
 
     fun fetchMasterStaticData() {
         isLoading.value = true
@@ -75,7 +78,8 @@ class BranchConfigurationViewModel : ViewModel() {
                 is NetworkResult.Error -> errorMessage.value = result.message
                 else -> errorMessage.value = "Unable to fetch master data"
             }
-            isLoading.value = false
+            if (libraryDetails.value != null)
+                isLoading.value = false
         }
     }
 
@@ -93,9 +97,40 @@ class BranchConfigurationViewModel : ViewModel() {
         }
     }
 
+    fun fetchLibraryDetails() {
+        viewModelScope.launch {
+            isLoading.value = true
+            when (val result = authRepository.getLibraryDetails()) {
+                is NetworkResult.Success -> {
+                    val details = result.data?.data
+                    libraryDetails.value = details
+                    emailId.value = libraryDetails.value?.libraryEmail ?: ""
+                    contactNo.value = libraryDetails.value?.libraryMobile ?: ""
+                    branchName.value = libraryDetails.value?.libraryName ?: ""
+                    upiId.value = libraryDetails.value?.pymentUpi ?: ""
+                }
+
+                is NetworkResult.Error -> {
+                    errorMessage.value = result.message
+                }
+
+                is NetworkResult.Unauthorized -> {
+                    errorMessage.value = result.message
+                    unAuthenticated.value = true
+                }
+
+                else -> {
+                    errorMessage.value = "Something went wrong"
+                }
+            }
+            if (staticData.value != null)
+                isLoading.value = false
+        }
+    }
+
     fun addShift() {
         val list = shifts.value ?: mutableListOf()
-        list.add(BranchConfigurationShift("", null, "", null, "", ""))
+        list.add(BranchConfigurationShift("", null, "", null, "", "", ""))
         shifts.value = list
     }
 
@@ -131,9 +166,10 @@ class BranchConfigurationViewModel : ViewModel() {
 
                 val totalMinutes = diffMillis / (1000 * 60)
 
-                // Convert to decimal hours
-                val hours = totalMinutes / 60.0
-                val duration = String.format(Locale.US, "%.2f", hours)
+                val hrs = totalMinutes / 60
+                val mins = totalMinutes % 60
+                val duration =
+                    if (mins == 0L) "$hrs" else String.format(Locale.US, "%d.%02d", hrs, mins)
 
                 // update only given position
                 shift.durationHours = duration
@@ -151,6 +187,9 @@ class BranchConfigurationViewModel : ViewModel() {
         val shiftsList = shifts.value ?: return
         val shift = shiftsList.getOrNull(position) ?: return
         shift.type = type
+        shift.dayTypeId =
+            staticData.value?.data?.planTypes?.find { it?.name == type }?.id.toString()
+
         // If "Custom" is selected, clear customName so user can type.
         // Otherwise, customName matches the shift type.
         if (type.equals("Custom", ignoreCase = true)) {
@@ -158,7 +197,7 @@ class BranchConfigurationViewModel : ViewModel() {
         } else {
             shift.customName = type
         }
-        
+
         shiftsList[position] = shift
         shifts.value = shiftsList
     }
@@ -192,13 +231,15 @@ class BranchConfigurationViewModel : ViewModel() {
         var totalFloorSeats = 0
 
         currentFloors.forEachIndexed { index, floor ->
-            val hasSomeData = !floor.floorName.isNullOrBlank() || floor.seatFrom != null || floor.seatTo != null
+            val hasSomeData =
+                !floor.floorName.isNullOrBlank() || floor.seatFrom != null || floor.seatTo != null
             val isMandatory = currentFloors.size > 1
 
             if (isMandatory || hasSomeData) {
                 if (floor.floorName.isNullOrBlank() || floor.seatFrom == null || floor.seatTo == null) {
-                    errorMessage.value = if (isMandatory) "Please complete all details for floor ${index + 1}."
-                    else "Enter all floor details."
+                    errorMessage.value =
+                        if (isMandatory) "Please complete all details for floor ${index + 1}."
+                        else "Enter all floor details."
                     return
                 } else if (floor.seatFrom!! > floor.seatTo!!) {
                     errorMessage.value = "Please enter valid seat range for floor ${index + 1}"
@@ -229,13 +270,13 @@ class BranchConfigurationViewModel : ViewModel() {
                 errorMessage.value = "Please fill all details for Shift ${index + 1}"
                 return
             }
-            
+
             // Required Custom Name validation
             if (shift.customName.isNullOrBlank()) {
                 errorMessage.value = "Please enter Custom Name for Shift ${index + 1}"
                 return
             }
-            
+
             totalShiftHours += shift.durationHours?.toDoubleOrNull() ?: 0.0
         }
         val branchHours = operatingHrs.value?.toDoubleOrNull() ?: 0.0
@@ -281,12 +322,20 @@ class BranchConfigurationViewModel : ViewModel() {
                 )
             }
 
+            val dateInputFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val dateOutputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val formattedFounderDate = try {
+                val date = dateInputFormat.parse(founderDay.value ?: "")
+                if (date != null) dateOutputFormat.format(date) else founderDay.value
+            } catch (e: Exception) {
+                founderDay.value
+            }
             val request = BranchConfigurationRequest(
                 branchDetails = BranchConfigurationBranchDetails(
                     branchName = branchName.value,
                     contactNumber = contactNo.value,
                     email = emailId.value,
-                    foundedDate = founderDay.value,
+                    foundedDate = formattedFounderDate,
                     upiId = upiId.value
                 ),
                 branchMaster = BranchConfigurationBranchMaster(
@@ -307,6 +356,12 @@ class BranchConfigurationViewModel : ViewModel() {
                 }
 
                 is NetworkResult.Error -> errorMessage.value = result.message
+
+                is NetworkResult.Unauthorized -> {
+                    errorMessage.value = result.message
+                    unAuthenticated.value = true
+                }
+
                 else -> errorMessage.value = "Failed to submit configuration"
             }
             isLoading.value = false

@@ -225,20 +225,30 @@
                     android:layout_height="0.5dp"
                     android:background="@color/color_DEDEDE" />
 
+                <include
+                    android:id="@+id/menuLogout"
+                    layout="@layout/item_profile_menu"
+                    app:title='@{"Logout"}' />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/color_DEDEDE" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginTop="16dp"
-                    android:padding="12dp"
                     android:alpha="0.4"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="12dp">
 
 
                     <ImageView

@@ -25,8 +25,8 @@ class LoginOptionActivity : AppCompatActivity() {
         AppUtils.handleSystemBars(binding.mainLayout)
 
         binding.btnAdminLogin.setOnClickListener {
-//            startActivity(Intent(this, AdminSignInActivity::class.java))
-            startActivity(Intent(this, LibraryProfileActivity::class.java))
+            startActivity(Intent(this, AdminSignInActivity::class.java))
+//            startActivity(Intent(this, LibraryProfileActivity::class.java))
         }
         binding.btnMemberLogin.setOnClickListener {
             startActivity(Intent(this, MemberSignInActivity::class.java))

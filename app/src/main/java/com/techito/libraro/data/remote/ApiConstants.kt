@@ -17,6 +17,7 @@ object ApiConstants {
     const val LIBRARY_CREATE_PAYMENT_ORDER = "library/payment/create-order"
     const val LIBRARY_PAYMENT_VERIFY = "library/payment/verify"
     const val MASTER_STATIC_DATA = "master/static-data"
-    const val LIBRARY_SAVE_BRANCH_CONFIGURATION = "library/save_branch_configuration"
+    const val LIBRARY_SAVE_BRANCH_CONFIGURATION = "library/branch/configure"
+    const val LIBRARY_DETAILS = "library/detail"
 
 }

@@ -72,9 +72,12 @@ interface ApiService {
     @GET(ApiConstants.SUB_URL + ApiConstants.MASTER_STATIC_DATA)
     suspend fun getMasterStaticDataList(): Response<StaticDataListResponse>
 
-    @POST(ApiConstants.SUB_URL + ApiConstants.LIBRARY_SAVE_BRANCH_CONFIGURATION) // Assuming endpoint
+    @POST(ApiConstants.SUB_URL + ApiConstants.LIBRARY_SAVE_BRANCH_CONFIGURATION)
     suspend fun saveBranchConfiguration(
         @Body request: BranchConfigurationRequest
     ): Response<BasicResponse>
+
+    @GET(ApiConstants.SUB_URL + ApiConstants.LIBRARY_DETAILS)
+    suspend fun getLibraryDetails(): Response<LibraryDetailResponse>
 
 }

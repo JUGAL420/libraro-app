@@ -3,6 +3,7 @@ package com.techito.libraro.repository
 import com.techito.libraro.data.remote.ApiService
 import com.techito.libraro.model.BasicResponse
 import com.techito.libraro.model.BranchConfigurationRequest
+import com.techito.libraro.model.LibraryDetailResponse
 import com.techito.libraro.model.PaymentCreateOrderResponse
 import com.techito.libraro.utils.NetworkResult
 
@@ -40,6 +41,12 @@ class AuthRepository(private val apiService: ApiService) : BaseRepository() {
     suspend fun saveBranchConfiguration(request: BranchConfigurationRequest): NetworkResult<BasicResponse> {
         return safeApiCall {
             apiService.saveBranchConfiguration(request)
+        }
+    }
+
+    suspend fun getLibraryDetails(): NetworkResult<LibraryDetailResponse> {
+        return safeApiCall {
+            apiService.getLibraryDetails()
         }
     }
 }

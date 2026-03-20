@@ -173,9 +173,35 @@
                 app:layout_constraintTop_toBottomOf="@+id/rvBranchImage">
 
                 <ImageView
+                    android:id="@+id/ivActive"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="12dp"
+                    android:contentDescription="@string/app_name"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="#E3E7FF"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_right_check"
+                    app:tint="@color/app_color_1" />
+
+                <ImageView
+                    android:id="@+id/ivShift"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="12dp"
+                    android:contentDescription="@string/app_name"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="#E3E7FF"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_add_edit_shift"
+                    app:tint="@color/app_color_1" />
+
+                <ImageView
                     android:id="@+id/ivEdit"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_marginEnd="12dp"
+                    android:contentDescription="@string/app_name"
                     android:background="@drawable/bg_circle"
                     android:backgroundTint="#E3E7FF"
                     android:padding="8dp"
@@ -186,7 +212,8 @@
                     android:id="@+id/ivBooking"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:contentDescription="@string/app_name"
                     android:background="@drawable/bg_circle"
                     android:backgroundTint="#E3E7FF"
                     android:padding="8dp"

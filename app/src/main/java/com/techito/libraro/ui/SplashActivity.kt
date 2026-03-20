@@ -40,6 +40,7 @@ class SplashActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             Log.d("SplashActivity", "User Token: ${preferenceManager.authToken.first()}")
+            Log.d("SplashActivity", "Device Id: ${preferenceManager.deviceId.first()}")
             // Check and store device ID if not already available
             val storedDeviceId = preferenceManager.deviceId.first()
             if (storedDeviceId.isNullOrEmpty()) {

@@ -6,12 +6,14 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Rect
 import android.graphics.Shader
+import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -19,7 +21,9 @@ import android.os.Parcelable
 import android.provider.Settings
 import android.util.DisplayMetrics
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -29,6 +33,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorRes
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import androidx.core.view.ViewCompat
@@ -37,10 +42,12 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.techito.libraro.R
+import com.techito.libraro.databinding.DialogCustomAlertBinding
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -48,6 +55,7 @@ import java.util.Locale
 import java.util.TimeZone
 import java.util.UUID
 import kotlin.math.abs
+import androidx.core.graphics.drawable.toDrawable
 
 /**
  * Utility object containing helper methods for UI manipulations, animations,
@@ -470,5 +478,50 @@ object AppUtils {
         view.text = getInitials(name)
         view.setTextColor(textColor)
         view.setBackgroundColor(bgColor)
+    }
+
+    /**
+     * Displays a dynamic custom alert dialog with title, description, and two buttons.
+     *
+     * @param context The context where the dialog should be shown.
+     * @param title The title text for the dialog.
+     * @param description The description text for the dialog.
+     * @param positiveText The text for the positive button. Default is "Confirm".
+     * @param negativeText The text for the negative button. Default is "Cancel".
+     * @param onPositiveClick Callback when positive button is clicked.
+     * @param onNegativeClick Callback when negative button is clicked. Default is dismiss dialog.
+     */
+    fun showCustomAlertDialog(
+        context: Context,
+        title: String,
+        description: String,
+        positiveText: String = "Confirm",
+        negativeText: String = "Cancel",
+        onPositiveClick: () -> Unit,
+        onNegativeClick: (() -> Unit)? = null
+    ) {
+        val dialogBinding = DialogCustomAlertBinding.inflate(LayoutInflater.from(context))
+        val dialog = AlertDialog.Builder(context)
+            .setView(dialogBinding.root)
+            .create()
+
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+
+        dialogBinding.tvTitle.text = title
+        dialogBinding.tvDescription.text = description
+        dialogBinding.btnPositive.text = positiveText
+        dialogBinding.btnNegative.text = negativeText
+
+        dialogBinding.btnPositive.setOnClickListener {
+            onPositiveClick()
+            dialog.dismiss()
+        }
+
+        dialogBinding.btnNegative.setOnClickListener {
+            onNegativeClick?.invoke()
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 }

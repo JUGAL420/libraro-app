@@ -6,15 +6,21 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
+import com.techito.libraro.LibraroApp
 import com.techito.libraro.R
 import com.techito.libraro.databinding.ActivityLibraryProfileBinding
+import com.techito.libraro.ui.LoginOptionActivity
 import com.techito.libraro.ui.library.branch.LibraryBranchMasterActivity
 import com.techito.libraro.ui.library.branchfloor.BranchFloorBlockActivity
+import com.techito.libraro.ui.library.exam.ExamNameMasterActivity
+import com.techito.libraro.ui.library.expense.ExpenseNameMasterActivity
 import com.techito.libraro.ui.library.plan.LibraryPlanActivity
 import com.techito.libraro.ui.library.planprice.LibraryPlanPriceActivity
 import com.techito.libraro.ui.library.plantypeorshift.LibraryPlanTypeShiftActivity
 import com.techito.libraro.ui.library.users.LibraryUsersActivity
 import com.techito.libraro.utils.AppUtils
+import kotlinx.coroutines.launch
 
 class LibraryProfileActivity : AppCompatActivity() {
 
@@ -50,6 +56,18 @@ class LibraryProfileActivity : AppCompatActivity() {
         }
         binding.menuPlanPrice.root.setOnClickListener {
             startActivity(Intent(this, LibraryPlanPriceActivity::class.java))
+        }
+        binding.menuExpense.root.setOnClickListener {
+            startActivity(Intent(this, ExpenseNameMasterActivity::class.java))
+        }
+        binding.menuExams.root.setOnClickListener {
+            startActivity(Intent(this, ExamNameMasterActivity::class.java))
+        }
+        binding.menuLogout.root.setOnClickListener {
+            AppUtils.showCustomAlertDialog(this@LibraryProfileActivity,"Logout!","Are you sure you want to logout?", positiveText = "Logout",
+                onPositiveClick = {
+                    LibraroApp.logout(this@LibraryProfileActivity)
+                })
         }
     }
 }

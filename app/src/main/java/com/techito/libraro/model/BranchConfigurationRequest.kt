@@ -2,7 +2,7 @@ package com.techito.libraro.model
 import com.google.gson.annotations.SerializedName
 
 data class BranchConfigurationRequest(
-    @SerializedName("branch_details")
+    @SerializedName("branch_detail")
     var branchDetails: BranchConfigurationBranchDetails?,
     @SerializedName("branch_master")
     var branchMaster: BranchConfigurationBranchMaster?,
@@ -55,9 +55,9 @@ data class BranchConfigurationPlan(
 )
 
 data class BranchConfigurationShift(
-    @SerializedName("custom_name")
+    @SerializedName("custom_plan_type")
     var customName: String?,
-    @SerializedName("duration_hours")
+    @SerializedName("slot_hours")
     var durationHours: String?,
     @SerializedName("end_time")
     var endTime: String?,
@@ -66,5 +66,7 @@ data class BranchConfigurationShift(
     @SerializedName("start_time")
     var startTime: String?,
     @SerializedName("type")
-    var type: String?
+    var type: String?,
+    @SerializedName("day_type_id")
+    var dayTypeId: String?
 )

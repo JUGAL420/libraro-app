@@ -9,6 +9,7 @@ import androidx.core.view.WindowCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.techito.libraro.LibraroApp
 import com.techito.libraro.R
 import com.techito.libraro.databinding.ActivityBranchConfigurationBinding
 import com.techito.libraro.utils.AppUtils
@@ -56,6 +57,11 @@ class BranchConfigurationActivity : AppCompatActivity() {
             message?.let {
                 AppUtils.showToast(this, it)
                 viewModel.onErrorHandled()
+            }
+        }
+        viewModel.unAuthenticated.observe(this) { unAuthenticated ->
+            if(unAuthenticated){
+                LibraroApp.logout(this@BranchConfigurationActivity)
             }
         }
     }

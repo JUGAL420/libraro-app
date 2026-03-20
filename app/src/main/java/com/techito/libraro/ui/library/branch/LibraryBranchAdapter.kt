@@ -1,5 +1,6 @@
 package com.techito.libraro.ui.library.branch
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -39,6 +40,12 @@ class LibraryBranchAdapter(
                 
                 ivEdit.setOnClickListener { onEditClick(branch, position) }
                 ivBooking.setOnClickListener { onBookingClick(branch, position) }
+                
+                ivShift.setOnClickListener {
+                    val context = root.context
+                    val intent = Intent(context, EditBranchShiftActivity::class.java)
+                    context.startActivity(intent)
+                }
             }
         }
     }

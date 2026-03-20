@@ -8,6 +8,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.security.crypto.MasterKey
 import com.google.gson.Gson
 import com.techito.libraro.model.AppSettingData
+import com.techito.libraro.model.LibraryDetail
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -47,6 +48,7 @@ class PreferenceManager private constructor(context: Context) {
         val DEVICE_ID = stringPreferencesKey("device_id")
         val HAS_ASKED_NOTIF_PERMISSION = booleanPreferencesKey("has_asked_notification_permission")
         val APP_SETTINGS = stringPreferencesKey("app_settings")
+        val LIBRARY_DETAILS = stringPreferencesKey("library_details")
         val LIBRARY_ID = stringPreferencesKey("library_id")
         val USER_TYPE = stringPreferencesKey("user_type")
         
@@ -272,13 +274,29 @@ class PreferenceManager private constructor(context: Context) {
     }
 
     /**
+     * Library Details
+     */
+    val libraryDetails: Flow<LibraryDetail?> = dataStore.data
+        .map { preferences ->
+            val json = preferences[Keys.LIBRARY_DETAILS]
+            if (json.isNullOrEmpty()) null else Gson().fromJson(json, LibraryDetail::class.java)
+        }
+
+    suspend fun saveLibraryDetails(details: LibraryDetail?) {
+        dataStore.edit { preferences ->
+            preferences[Keys.LIBRARY_DETAILS] = Gson().toJson(details)
+        }
+    }
+
+    /**
      * Clears all stored preferences (usually on Logout) except for FCM_TOKEN and DEVICE_ID.
      */
     suspend fun clearAll() {
         dataStore.edit { preferences ->
             val fcmToken = preferences[Keys.FCM_TOKEN]
             val deviceId = preferences[Keys.DEVICE_ID]
-            
+            val isFirstTime = preferences[Keys.IS_FIRST_TIME]
+
             // Keep remember me details if that's what user meant by "restore when clear" 
             // but usually clearAll means logout. 
             // I will keep remember details for now as per point 3.
@@ -291,6 +309,7 @@ class PreferenceManager private constructor(context: Context) {
             // Restore kept values
             fcmToken?.let { preferences[Keys.FCM_TOKEN] = it }
             deviceId?.let { preferences[Keys.DEVICE_ID] = it }
+            isFirstTime?.let { preferences[Keys.IS_FIRST_TIME] = it }
             remEmail?.let { preferences[Keys.REMEMBER_EMAIL] = it }
             remPass?.let { preferences[Keys.REMEMBER_PASSWORD] = it }
             remChecked?.let { preferences[Keys.IS_REMEMBER_ME] = it }

@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.techito.libraro.R
 import com.techito.libraro.databinding.FragmentConfigurationBranchFloorBinding
 import com.techito.libraro.model.BranchConfigurationPlan
+import com.techito.libraro.model.LibraryDetail
 import com.techito.libraro.model.StaticMonthlyOption
 import com.techito.libraro.ui.library.adapter.BranchConfigurationFloorAdapter
 import com.techito.libraro.utils.AppUtils
@@ -47,6 +48,10 @@ class ConfigurationBranchFloorFragment : Fragment() {
         setupDatePicker()
         setupObservers()
 
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.fetchMasterStaticData()
+        }
+
         binding.mcvAddFloor.setOnClickListener {
             viewModel.addFloor()
         }
@@ -56,10 +61,14 @@ class ConfigurationBranchFloorFragment : Fragment() {
         if (viewModel.staticData.value == null || viewModel.staticData.value?.data == null) {
             viewModel.fetchMasterStaticData()
         }
+        if (viewModel.libraryDetails.value == null) {
+            viewModel.fetchLibraryDetails()
+        }
     }
 
     private fun setupObservers() {
         viewModel.staticData.observe(viewLifecycleOwner) { response ->
+            binding.swipeRefresh.isRefreshing = false
             response?.data?.let { data ->
                 val monthlyOptions = data.monthlyOptions?.filterNotNull() ?: emptyList()
                 viewModel.monthlyOptions.value = monthlyOptions as MutableList<StaticMonthlyOption>
@@ -125,6 +134,9 @@ class ConfigurationBranchFloorFragment : Fragment() {
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.layoutProgress.clProgress.isVisible = isLoading
+            if (!isLoading) {
+                binding.swipeRefresh.isRefreshing = false
+            }
         }
     }
 
